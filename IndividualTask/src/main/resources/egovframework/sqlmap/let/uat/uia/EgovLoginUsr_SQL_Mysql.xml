@@ -43,7 +43,7 @@
               FROM LETTNEMPLYRINFO
              WHERE EMPLYR_ID = #id#
                AND PASSWORD = #password#
-               AND EMPLYR_STTUS_CODE = 'P'
+               AND (EMPLYR_STTUS_CODE = 'P' OR EMPLYR_STTUS_CODE = '가입완료')
 			]]>
 		</isEqual>
 	</select>

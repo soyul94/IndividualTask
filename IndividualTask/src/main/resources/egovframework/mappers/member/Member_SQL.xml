@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.soyul.member.service.impl.MemberMapper">
+
+<!-- 약관정보 관련 VO -->
+<!--     <resultMap id="stplatMap" type="egovframework.com.uss.umt.service.StplatVO">
+        <result property="useStplatId" column="USE_STPLAT_ID"/>
+        <result property="useStplatCn" column="USE_STPLAT_CN"/>
+        <result property="infoProvdAgeCn" column="INFO_PROVD_AGRE_CN"/>
+    </resultMap> -->
+   
+<select id="checkIdDplct" resultType="int">
+	SELECT COUNT(*) usedCnt
+		FROM LETTNEMPLYRINFO
+		WHERE EMPLYR_ID = #{checkId}
+</select>   
+   
+    
+<select id="selectMberList" resultType="egovMap">
+SELECT 
+    uniqId, userTy, userId , userNm, emailAdres, areaNo, middleTelno, endTelno, moblphonNo, groupId, sttus, sbscrbDe
+FROM(
+    SELECT 
+        ESNTL_ID              uniqId,
+        'USR01'               userTy,
+        MBER_ID               userId,
+        MBER_NM               userNm,
+        MBER_EMAIL_ADRES      emailAdres,
+        AREA_NO               areaNo,
+        MIDDLE_TELNO          middleTelno,
+        END_TELNO             endTelno,
+        MBTLNUM           moblphonNo,
+        GROUP_ID              groupId,
+        MBER_STTUS            sttus,
+        SBSCRB_DE             sbscrbDe
+    FROM    COMTNGNRLMBER
+    ) A
+        WHERE 1=1
+        <if test='sbscrbSttus != null and sbscrbSttus neq "0" and sbscrbSttus neq ""'>
+            AND sttus LIKE  #{sbscrbSttus}
+        </if>
+        <if test="@egovframework.com.cmm.util.EgovMybaitsUtil@isNotEmpty(searchKeyword)">
+        <if test="searchCondition == 0">AND
+             userId LIKE #{searchKeyword}
+        </if>
+        <if test="searchCondition == 1">AND
+             userNm LIKE '%' #{searchKeyword} '%'
+        </if>
+        </if>
+        ORDER BY sbscrbDe DESC
+        LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+</select>
+    
+    
+<select id="selectMberListTotCnt" resultType="int">
+            SELECT COUNT(1) totcnt
+            FROM(
+            SELECT 
+                ESNTL_ID               uniqId,
+                'USR01'               userTy,
+                MBER_ID               userId,
+                MBER_NM               userNm,
+                MBER_EMAIL_ADRES      emailAdres,
+                AREA_NO               areaNo,
+                MIDDLE_TELNO          middleTelno,
+                END_TELNO             endTelno,
+                MBTLNUM           moblphonNo,
+                GROUP_ID              groupId,
+                MBER_STTUS            sttus,
+                SBSCRB_DE             sbscrbDe
+            FROM    COMTNGNRLMBER
+            ) A
+        WHERE 1=1
+            <if test='sbscrbSttus != null and sbscrbSttus neq "0" and sbscrbSttus neq ""'>
+                AND sttus LIKE  #{sbscrbSttus}
+            </if>
+            <if test="@egovframework.com.cmm.util.EgovMybaitsUtil@isNotEmpty(searchKeyword)">
+            <if test="searchCondition == 0">AND
+                 userId LIKE #{searchKeyword}
+            </if>
+            <if test="searchCondition == 1">AND
+                 userNm LIKE '%' #{searchKeyword} '%'
+            </if>
+            </if>
+</select>
+    
+<insert id="insertMber" parameterType="egovframework.soyul.member.MemberVO">
+        
+            INSERT INTO LETTNEMPLYRINFO(   
+                    EMPLYR_ID        ,
+                    PASSWORD         ,
+                    USER_NM          ,
+                    SEXDSTN_CODE     ,
+                    IHIDNUM			 ,
+                    PASSWORD_HINT    ,
+                    PASSWORD_CNSR    ,
+                    MBTLNUM          ,
+                    ZIP              ,
+                    HOUSE_ADRES      ,
+                    DETAIL_ADRES     ,
+                    EMAIL_ADRES      ,
+                    ESNTL_ID      	 ,
+                    EMPLYR_STTUS_CODE,
+                    SBSCRB_DE        
+              )
+              VALUES(
+                    #{emplyrId},
+                    #{password},
+                    #{userNm},
+                    #{sexdstnCode},
+                    #{ihidnum},
+                    #{passwordHint},
+                    #{passwordCnsr},
+                    #{mbtlnum},
+                    #{zip},
+                    #{houseAdres},
+                    #{detailAdres},
+                    #{emailAdres},
+                    #{esntlId},
+                    #{emplyrSttusCode},
+                    now()
+              )              
+        
+</insert>
+    
+<delete id="deleteMber">
+        
+            DELETE FROM COMTNGNRLMBER 
+            WHERE ESNTL_ID=#{delId}
+        
+</delete>
+    
+<select id="selectMber" resultType="egovframework.soyul.member.MemberVO">
+        
+            SELECT
+                ESNTL_ID          uniqId,
+                'USR01'          userTy,
+                MBER_ID          mberId,
+                MBER_NM          mberNm,
+                PASSWORD         password,
+                PASSWORD_HINT    passwordHint,
+                PASSWORD_CNSR    passwordCnsr,
+                IHIDNUM          ihidnum,
+                SEXDSTN_CODE     sexdstnCode,
+                ZIP              zip,
+                ADRES            adres,
+                AREA_NO          areaNo,
+                MBER_STTUS       mberSttus,
+                DETAIL_ADRES     detailAdres,
+                END_TELNO        endTelno,
+                MBTLNUM      moblphonNo,
+                GROUP_ID         groupId,
+                MBER_FXNUM       mberFxnum,
+                MBER_EMAIL_ADRES mberEmailAdres,
+                MIDDLE_TELNO     middleTelno,
+                SBSCRB_DE        sbscrbDe,
+                LOCK_AT          lockAt
+            FROM COMTNGNRLMBER
+            WHERE ESNTL_ID=#{uniqId}        
+</select>
+    
+    
+<update id="updateMber">
+        
+            UPDATE COMTNGNRLMBER 
+            SET MBER_ID          = #{mberId},
+                MBER_NM          = #{mberNm},
+                PASSWORD_HINT    = #{passwordHint},
+                PASSWORD_CNSR    = #{passwordCnsr},
+                IHIDNUM          = #{ihidnum},
+                SEXDSTN_CODE     = #{sexdstnCode},
+                ZIP              = #{zip},
+                ADRES            = #{adres},
+                AREA_NO          = #{areaNo},
+                MBER_STTUS       = #{mberSttus},
+                DETAIL_ADRES     = #{detailAdres},
+                END_TELNO        = #{endTelno},
+                MBTLNUM      = #{moblphonNo},
+                GROUP_ID         = #{groupId},
+                MBER_FXNUM       = #{mberFxnum},
+                MBER_EMAIL_ADRES = #{mberEmailAdres},
+                MIDDLE_TELNO     = #{middleTelno}
+            WHERE ESNTL_ID=#{uniqId}
+</update>
+    
+    <!-- <select id="selectStplat_S" resultMap="stplatMap">
+        
+            SELECT
+                USE_STPLAT_ID           ,
+                USE_STPLAT_CN           ,
+                INFO_PROVD_AGRE_CN      
+            FROM COMTNSTPLATINFO
+            WHERE USE_STPLAT_ID=#{stplatId}
+        
+    </select> -->
+    
+    <update id="updatePassword">
+        
+            UPDATE COMTNGNRLMBER 
+            SET 
+                   PASSWORD   =  #{password}
+            WHERE  ESNTL_ID  = #{uniqId}
+        
+    </update>
+    
+    <select id="selectPassword" resultType="egovframework.soyul.member.MemberVO">
+        
+            SELECT
+                    PASSWORD          password 
+            FROM    COMTNGNRLMBER
+            WHERE   ESNTL_ID=#{uniqId}
+        
+    </select>
+
+    <update id="updateLockIncorrect">
+            UPDATE COMTNGNRLMBER 
+ 			   SET  LOCK_AT = NULL 
+			     ,  LOCK_CNT  = NULL 
+			     ,  LOCK_LAST_PNTTM = NULL 
+            WHERE  ESNTL_ID  = #{uniqId}
+    </update>
+
+</mapper>

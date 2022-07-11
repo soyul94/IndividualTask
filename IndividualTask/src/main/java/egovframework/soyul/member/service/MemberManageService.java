@@ -32,7 +32,7 @@ public interface MemberManageService {//원본 EgovMberManageService
 	 * @return mberManageVO 일반회원상세정보
 	 * @throws Exception
 	 */
-	public MemberVO selectMber(String emplyrId) throws Exception;
+//	public MemberVO selectMber(String emplyrId) throws Exception;
 
 	/**
 	 * 기 등록된 회원 중 검색조건에 맞는 회원들의 정보를 데이터베이스에서 읽어와 화면에 출력
@@ -41,7 +41,7 @@ public interface MemberManageService {//원본 EgovMberManageService
 	 * @throws Exception
 	 */
 //	public List<MemberVO> selectMberList(UserDefaultVO userSearchVO) throws Exception;
-	public List<MemberVO> selectMberList(MemberVO memberVO) throws Exception;
+//	public List<MemberVO> selectMberList(MemberVO memberVO) throws Exception;
 
     /**
      * 일반회원 총 갯수를 조회한다.
@@ -49,21 +49,21 @@ public interface MemberManageService {//원본 EgovMberManageService
      * @return 일반회원총갯수(int)
      * @throws Exception
      */
-    public int selectMberListTotCnt(MemberVO memberVO) throws Exception;
+//    public int selectMberListTotCnt(MemberVO memberVO) throws Exception;
 
 	/**
 	 * 화면에 조회된 일반회원의 기본정보를 수정하여 항목의 정합성을 체크하고 수정된 데이터를 데이터베이스에 반영
 	 * @param mberManageVO 일반회원수정정보
 	 * @throws Exception
 	 */
-	public void updateMber(MemberVO memberVO) throws Exception;
+//	public void updateMber(MemberVO memberVO) throws Exception;
 
 	/**
 	 * 화면에 조회된 사용자의 정보를 데이터베이스에서 삭제
 	 * @param checkedIdForDel 삭제대상 일반회원아이디
 	 * @throws Exception
 	 */
-	public void deleteMber(String checkedIdForDel) throws Exception;
+//	public void deleteMber(String checkedIdForDel) throws Exception;
 
 	/**
 	 * 일반회원 약관확인
@@ -71,14 +71,14 @@ public interface MemberManageService {//원본 EgovMberManageService
 	 * @return 일반회원약관정보(List)
 	 * @throws Exception
 	 */
-	public List<?> selectStplat(String stplatId)  throws Exception;
+//	public List<?> selectStplat(String stplatId)  throws Exception;
 
 	/**
 	 * 일반회원암호수정
 	 * @param mberManageVO 일반회원수정정보(비밀번호)
 	 * @throws Exception
 	 */
-	public void updatePassword(MemberVO memberVO) throws Exception;
+//	public void updatePassword(MemberVO memberVO) throws Exception;
 
 	/**
 	 * 일반회원이 비밀번호를 기억하지 못할 때 비밀번호를 찾을 수 있도록 함
@@ -86,7 +86,7 @@ public interface MemberManageService {//원본 EgovMberManageService
 	 * @return mberManageVO 일반회원암호정보
 	 * @throws Exception
 	 */
-	public MemberVO selectPassword(MemberVO memberVO) throws Exception;
+//	public MemberVO selectPassword(MemberVO memberVO) throws Exception;
 
 //	/**
 //	 * 로그인인증제한 해제 

@@ -67,10 +67,15 @@ public class ReviewController {
 		return "yul/review/reviewSelect";
 	}
 	
+	//게시물 목록 가져오기
 	@RequestMapping(value="/list.do")
 	public String reviewList(@ModelAttribute("searchVO")ReviewVO reviewVO, HttpServletRequest request, ModelMap model) throws Exception{
 		
 		System.out.println("/review/list.do 컨트롤 호출");	
+		
+		System.out.println(reviewVO.getSearchCondition());
+		System.out.println(reviewVO.getSearchKeyword());
+		
 		//공지 게시글
 		reviewVO.setNoticeAt("Y");
 		List<EgovMap> noticeResultList= reviewService.selectReviewList(reviewVO);
@@ -208,21 +213,21 @@ public class ReviewController {
 			reviewVO.setMngAt("Y");
 		}
 
-//		String atchFileId = reviewVO.getAtchFileId();
-//		final Map<String, MultipartFile> files = multiRequest.getFileMap();
-//		if (!files.isEmpty()) {
-//			if (EgovStringUtil.isEmpty(atchFileId)) {
-//				List<FileVO> result = fileUtil.parseFileInf(files, "REVIEW_", 0, "", "board.fileStorePath");
-//				atchFileId = fileMngService.insertFileInfs(result);
-//				reviewVO.setAtchFileId(atchFileId);
-//			} else {
-//				FileVO fvo = new FileVO();
-//				fvo.setAtchFileId(atchFileId);
-//				int cnt = fileMngService.getMaxFileSN(fvo);
-//				List<FileVO> _result = fileUtil.parseFileInf(files, "REVIEW_", cnt, atchFileId, "board.fileStorePath");
-//				fileMngService.updateFileInfs(_result);
-//			}
-//		}
+		String atchFileId = reviewVO.getAtchFileId();
+		final Map<String, MultipartFile> files = multiRequest.getFileMap();
+		if (!files.isEmpty()) {
+			if (EgovStringUtil.isEmpty(atchFileId)) {
+				List<FileVO> result = fileUtil.parseFileInf(files, "REVIEW_", 0, "", "review.fileStorePath");
+				atchFileId = fileMngService.insertFileInfs(result);
+				reviewVO.setAtchFileId(atchFileId);
+			} else {
+				FileVO fvo = new FileVO();
+				fvo.setAtchFileId(atchFileId);
+				int cnt = fileMngService.getMaxFileSN(fvo);
+				List<FileVO> _result = fileUtil.parseFileInf(files, "REVIEW_", cnt, atchFileId, "review.fileStorePath");
+				fileMngService.updateFileInfs(_result);
+			}
+		}
 
 		reviewVO.setUserId(user.getId());
 		System.out.println(reviewVO);

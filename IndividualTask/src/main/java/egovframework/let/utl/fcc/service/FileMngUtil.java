@@ -52,8 +52,6 @@ public class FileMngUtil {
 		}
 		
 		
-		
-		
 		//첨부파일ID 생성 및 업데이트 여부
 		if("".equals(atchFileId) || atchFileId==null) {
 			atchFileIdString= idgenService.getNextStringId(); //첨부파일 아이디를 새로 생성 
@@ -63,15 +61,11 @@ public class FileMngUtil {
 		}
 		
 		
-		
-		
 		//폴더경로 설정		 //File: java.io
 		File saveFolder= new File(storePathString); 
 		if(!saveFolder.exists() || saveFolder.isFile()) { //지정한 경로가 존재하지 않는다면 경로에 맞게 폴더를 생성함
-			saveFolder.mkdir();
+			saveFolder.mkdirs();
 		}
-		
-		
 		
 		
 		//파일변수    //Iterator, Entry : java.util
@@ -82,14 +76,12 @@ public class FileMngUtil {
 		FileVO fvo;
 		
 		
-		
 		while(itr.hasNext()) {
 			
 			Entry<String, MultipartFile> entry= itr.next();
 			
 			file= entry.getValue();
 			String orginFileName= file.getOriginalFilename(); //원본 파일명
-			System.out.println("AAAA");
 			
 			//-----------------------------------
 			// 원본 파일명이 없는 경우(첨부파일이 존재하지 않는 것) 처리 
@@ -99,30 +91,24 @@ public class FileMngUtil {
 				continue;
 			}
 			//-----------------------------------
-			System.out.println("BBBB");
 			
 			//파일확장자 체크
 			int index = orginFileName.lastIndexOf("."); //이름의 마지막 .을 검색하여 확장자를 찾음
 			String fileExt = orginFileName.substring(index+1); //파일의 확장자를 가져옴
-			System.out.println("CCCC");
 			
 			//저장파일명				//EgovStringUtil: egovframework.let.utl.fcc.service.EgovStringUtil
 			String newName = KeyStr + EgovStringUtil.getTimeStamp() + fileKey;
 			//원본파일명을 그대로 DB에 저장하면 기존 데이터와의 중복이 문제될 수 있기 때문에 원본파일명은 따로 보관하되 이름을 변경해서 저장한다.
-			System.out.println("DDDD");
 			
 			//파일사이즈
 			long size = file.getSize();
-			System.out.println("EEEE  "+fileKey);
 			
 			//파일저장: 
 			if(!"".equals(orginFileName)) {
 				filePath = storePathString + File.separator + newName;
 				//		  	 저장위치				폴더 구분자 		     새로운 이름
-				System.out.println("FFFF  "+filePath);
 				file.transferTo(new File(filePath));// 저장함 > 여기서 앙대 ㅠㅠ
 			}
-			System.out.println("FFFF  "+fileKey);
 			
 			fvo = new FileVO();
 			fvo.setFileExtsn(fileExt);

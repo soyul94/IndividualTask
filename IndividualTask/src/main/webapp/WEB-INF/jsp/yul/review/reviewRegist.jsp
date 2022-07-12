@@ -104,7 +104,7 @@ $(function(){
 <body>
 
 <%-- 헤더(메뉴바) --%>
-<jsp:include page="/WEB-INF/jsp/yul/comm/header.jsp" />
+<%@ include file = "/WEB-INF/jsp/yul/comm/header.jsp"%>
 
 
 <c:choose> <%-- 아래의 폼에 담긴 정보가 이동할 주소를 결정 --%>

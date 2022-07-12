@@ -41,22 +41,22 @@ body{
 </head>
 <body>
 <%-- 헤더(메뉴바) --%>
-<jsp:include page="/WEB-INF/jsp/yul/comm/header.jsp" />
+<%@ include file = "/WEB-INF/jsp/yul/comm/header.jsp"%>
 
 <%--목록 출력하기 --%>
 <div class="container">
 	<div id="contents">
 		<%--검색영역 --%>
 		<div id="bbs_search">
-			<form name="frm" method="post" action="/board/selectList.do">
+			<form name="frm" method="post" action="${pageContext.request.contextPath}/review/list.do">
 				<fieldset>
 					<legend>검색조건 입력폼</legend>
 					<label for="ftext" class="hdn">검색분류 선택</label>
 					<select name="searchCondition" id="ftext">
 						<option value="0" <c:if test="${searchVO.searchCondition eq '0'}">selected="selected"</c:if>>제목</option>
-						<option value="0" <c:if test="${searchVO.searchCondition eq '1'}">selected="selected"</c:if>>내용</option>
-						<option value="0" <c:if test="${searchVO.searchCondition eq '2'}">selected="selected"</c:if>>작성자</option>
-						<option value="0" <c:if test="${searchVO.searchCondition eq '3'}">selected="selected"</c:if>>피부 타입</option>
+						<option value="1" <c:if test="${searchVO.searchCondition eq '1'}">selected="selected"</c:if>>내용</option>
+						<option value="2" <c:if test="${searchVO.searchCondition eq '2'}">selected="selected"</c:if>>작성자</option>
+						<option value="3" <c:if test="${searchVO.searchCondition eq '3'}">selected="selected"</c:if>>피부 타입</option>
 					</select>
 					<label for="inp_text" class="hdn">검색어 입력</label>
 					<input name="searchKeyword" value="<c:out value="${searchVO.searchKeyword}"/>" type="text" class="inp_s" id="inp_text"/>
@@ -130,13 +130,13 @@ body{
 								</td>
 								<td class="skinType">${result.skinType}</td>
 								<td class="tit">
-									<%-- <c:if test="${not empty result.atchFileNm}">
+									<c:if test="${not empty result.atchFileNm}">
 										<c:url var="thumbUrl" value="/cmm/fms/getThumbImage.do">
 											<c:param name="thumbYn" value="Y"/>
 											<c:param name="atchFileNm" value="${result.atchFileNm}"/>
 										</c:url>
 										<img src="${thumbUrl}" alt="썸네일">
-									</c:if> --%>
+									</c:if>
 									<c:url var="viewUrl" value="/review/select.do${_BASE_PARAM}">
 										<c:param name="reviewId" value="${result.reviewId}"/>
 										<c:param name="pageIndex" value="${searchVO.pageIndex}"/>

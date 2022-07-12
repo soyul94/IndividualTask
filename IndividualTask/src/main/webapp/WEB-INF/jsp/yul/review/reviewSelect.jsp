@@ -25,7 +25,7 @@
 <body>
 
 <%-- 헤더(메뉴바) --%>
-<jsp:include page="/WEB-INF/jsp/yul/comm/header.jsp" />
+<%@ include file = "/WEB-INF/jsp/yul/comm/header.jsp"%>
 
 <%-- 기본 URL --%>
 <c:url var="_BASE_PARAM" value="">
@@ -63,14 +63,14 @@
 					<dt>리뷰 제품</dt>
 					<dd><c:out value="${result.reviewProduct}"/></dd>
 				</dl>
-				<%-- <dl class="tit_view">
+				<dl class="tit_view">
 					<dt>첨부파일목록</dt>
-					<dd>/cmm/fms/selectFileInfs.do : 어노테이션 주소
+					<dd><!-- /cmm/fms/selectFileInfs.do : 어노테이션 주소 -->
 						<c:import url="/cmm/fms/selectFileInfs.do" charEncoding="utf-8">
 							<c:param name="param_atchFileId" value="${result.atchFileId}"/>
 						</c:import>
 					</dd>
-				</dl> --%>
+				</dl>
 				<div class="view_cont">
 					<c:out value="${result.reviewCn}" escapeXml="fales" />
 				</div>

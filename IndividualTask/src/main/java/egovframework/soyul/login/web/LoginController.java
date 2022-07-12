@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import egovframework.com.cmm.EgovMessageSource;
@@ -33,7 +35,14 @@ public class LoginController {
 //		return "/yul/comm/logForm";
 //	}
 	
-	@RequestMapping(value="/actionLogin.do")
+	@GetMapping(value="/actionLogin.do")
+	public String actionLogin( ModelMap model) throws Exception{
+		
+		return "/yul/comm/loginForm";
+	}
+	
+	
+	@PostMapping(value="/actionLogin.do")
 	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model) throws Exception{
 		
 		LoginVO resultVO = loginService.actionLogin(loginVO); //로그인한 사람이 상세정보 조회
@@ -46,7 +55,7 @@ public class LoginController {
 		}
 		else {
 			model.addAttribute("loginMessage",egovMessageSource.getMessage("fail.common.login"));
-			return "forward:/main.do";
+			return "/yul/comm/loginForm";
 		}
 		
 	}

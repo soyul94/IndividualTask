@@ -10,61 +10,29 @@
 <title>Insert title here</title>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-
+<link href="${pageContext.request.contextPath}/yul/css/sub.css" rel="stylesheet"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/yul/asset/front/css/style.css" />
 
 </head>
 <body>
-	<header id="header_box">
+<%-- 헤더 --%>
+<%@ include file = "/WEB-INF/jsp/yul/comm/header.jsp"%>
+	
 		
-		<div id="header">
-			<div id="logo">
+	<!-- 로그인 -->
+	
+	<div class="layer-popup layer-login" ">
+		<h1>로그인</h1>
+		<header class="layer-header">
+			<div class="login-img">
 				<img src="<c:url value='/yul/images/main/task_logo.png' />" alt="소율 로고">
 			</div>
-			<nav>
-				<div id="loginBar">
-					<ul>
-						<li><a href="<c:url value='/main.do' />">Home</a></li>
-						<!-- <li><a href="#">Join</a></li> -->
-						<!-- <li><a href="#">Login</a></li> -->
-						<c:choose>
-							<c:when test="${empty sessionScope.LoginVO.id}">
-								<li><a href="${pageContext.request.contextPath}/member/joinForm.do">Join</a></li>
-								<li><a href="${pageContext.request.contextPath}/login/actionLogin.do" class="login">Login</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="#">MyPage</a></li>
-								<li>
-								<a href="${pageContext.request.contextPath}/login/actionLogout.do">
-									<%-- <c:out value="${sessionScope.LoginVO.name}" />님 로그아웃 --%>
-									Logout
-								</a>
-								</li>
-							</c:otherwise>
-						</c:choose>
-					</ul>
-				</div>
-				<div id="menu">
-					<ul>
-						<li><a href="#">Product</a></li>
-						<li><a href="#">Package</a></li>
-						<li><a href="#">Hand-Tailor</a></li>
-						<li><a href="<c:url value='/review/list.do' />">Review</a></li>
-					</ul>
-				</div>
-			</nav>
-		</div>
-		
-	<%-- <!-- 로그인 -->
-	<div class="dim"></div>
-	<div class="layer-popup layer-login" style="display: none;">
-		<header class="layer-header">
-			<span class="logo"> <span class="img-logo">한국폴리텍대학
+			<!-- <span class="logo"> <span class="img-logo">한국폴리텍대학
 					대전캠퍼스 스마트소프트웨어학과</span>
-			</span>
-			<button type="button" class="layer-close">
+			</span> -->
+			<!-- <button type="button" class="layer-close">
 				<span>팝업 닫기</span>
-			</button>
+			</button> -->
 		</header>
 		<div class="layer-body">
 			<form action="${pageContext.request.contextPath}/login/actionLogin.do" id="frmLogin" name="frmLogin"
@@ -86,7 +54,11 @@
 				</fieldset>
 			</form>
 		</div>
-	</div> --%>
+		<div class="txt_find"> <a href="#"
+			class="link_find">아이디</a> / <a href="#"
+			class="link_find">비밀번호 찾기</a>
+		</div>
+	</div>
 	</header>
 	
 
@@ -97,7 +69,7 @@
 			//로그인
 			$(".login").click(function() {
 				$(".dim, .layer-login").fadeIn();
-				return true;
+				return false;
 			})
 
 			//레이어닫기
@@ -121,7 +93,7 @@
 		}
 
 		<c:if test="${not empty loginMessage}">
-		alert("${loginMessage}");
+			alert("${loginMessage}");
 		</c:if>
 	</script>
 </body>

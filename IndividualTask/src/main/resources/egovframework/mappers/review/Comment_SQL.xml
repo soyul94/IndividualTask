@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.soyul.comm.service.impl.CommentMapper">
+	
+	
+	<select id="selectCommentList" resultType="egovMap">
+		select
+			COMMENT_ID,
+			COMMENT_REGISTER_ID,
+			COMMENT_CONTENT,
+			COMMENT_REGISTER_DATE,
+			BOARD_ID
+		from COMMENT where BOARD_ID=#{boardId} order by COMMENT_REGISTER_DATE desc
+	</select>
+	
+	<select id="selectCommentListCnt" resultType="int">
+		select COUNT(*) from COMMENT where BOARD_ID=#{boardId}
+	</select>
+	
+	<insert id="insertComment" parameterType="egovframework.soyul.comm.CommentVO"  >
+		insert into COMMENT(
+			COMMENT_ID,
+			COMMENT_REGISTER_ID,
+			COMMENT_CONTENT,
+			COMMENT_REGISTER_DATE,
+			BOARD_ID
+		) values(	
+			#{commentId},
+			#{commentRegisterId},
+			#{commentContent},
+			now(),
+			#{boardId}
+		)
+	</insert>
+	
+	<delete id="deleteComment" parameterType="egovframework.soyul.comm.CommentVO">
+		delete from COMMENT where BOARD_ID=#{boardId} and COMMENT_ID=#{commentId}
+	</delete>
+	
+</mapper>	  
+

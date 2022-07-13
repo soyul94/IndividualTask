@@ -67,6 +67,7 @@ public class ReviewController {
 		return "yul/review/reviewSelect";
 	}
 	
+	
 	//게시물 목록 가져오기
 	@RequestMapping(value="/list.do")
 	public String reviewList(@ModelAttribute("searchVO")ReviewVO reviewVO, HttpServletRequest request, ModelMap model) throws Exception{
@@ -147,7 +148,7 @@ public class ReviewController {
 	
 	// 입력받은 게시물 등록하는 메소드
 	@RequestMapping(value = "/insert.do")
-	public String boardInsert(final MultipartHttpServletRequest multiRequest,
+	public String reviewInsert(final MultipartHttpServletRequest multiRequest,
 			@ModelAttribute("searchVO")ReviewVO reviewVO, HttpServletRequest request, ModelMap model) throws Exception {
 
 		System.out.println("/review/insert.do 컨트롤 호출");	
@@ -195,7 +196,7 @@ public class ReviewController {
 	
 	// 게시물 수정하는 메소드
 	@RequestMapping(value = "/update.do")
-	public String boardUpdate(final MultipartHttpServletRequest multiRequest,
+	public String reviewUpdate(final MultipartHttpServletRequest multiRequest,
 			@ModelAttribute("searchVO")ReviewVO reviewVO, HttpServletRequest request, ModelMap model) throws Exception {
 
 		System.out.println("/review/update.do 컨트롤 호출");
@@ -243,7 +244,7 @@ public class ReviewController {
 	
 	// 게시물 삭제
 	@RequestMapping(value = "/delete.do")
-	public String boardDelete(@ModelAttribute("searchVO")ReviewVO reviewVO, HttpServletRequest request, ModelMap model)
+	public String reviewDelete(@ModelAttribute("searchVO")ReviewVO reviewVO, HttpServletRequest request, ModelMap model)
 			throws Exception {
 
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();

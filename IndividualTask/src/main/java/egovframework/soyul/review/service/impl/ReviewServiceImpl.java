@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 @Service("reviewService") //service의 어노테이션은 프로젝트에 단 하나여야한다.
-public class ReviewviceImpl extends EgovAbstractServiceImpl implements ReviewService {
+public class ReviewServiceImpl extends EgovAbstractServiceImpl implements ReviewService {
 	
 	@Resource(name="reviewMapper")
 	private ReviewMapper reviewMapper;

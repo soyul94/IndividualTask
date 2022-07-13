@@ -100,6 +100,20 @@
 	</div>
 </div>
 
+
+<%-- 댓글작성 --%>
+<form action="${pageContext.request.contextPath}/comment/insert.do" method="post">
+		<input type="hidden" name="boardId" value="${result.reviewId}" />
+		<textarea name="commentContent" rows="5" cols="50"></textarea>
+		<input type="button" value="저장" id="saveBtn"/>
+</form>
+
+<div class="comment-list">
+	<c:import url="/comment/list.do" charEncoding="utf-8">
+		<c:param name="boardId" value="${result.reviewId}"/>
+	</c:import>
+</div>
+
 <script>
 	$(document).ready(function(){
 		//게시글 삭제
@@ -109,6 +123,45 @@
 			}
 		});
 	});
+	
+	
+	$('#saveBtn').on('click', function(){ //saveBtn을 클릭하면 함수 실행
+		var content = $('[name="commentContent"]').val();
+		if(content==""){
+			alert("내용을 입력해주세요");
+		}
+		else{
+			$.ajax({
+			  url: "${pageContext.request.contextPath}/comment/insert.do",	//요청주소
+			  method: "POST",											//요청방식
+			  data: { boardId :$('[name="boardId"]').val(), 
+				  	  commentContent : $('[name="commentContent"]').val()
+				  },	//파라미터
+			  dataType: "text"											//요청의 결과(서버의 응답)으로 받을 데이터의 형식
+			}).done(function( msg ) {
+			 	alert(msg);
+			 	
+			 	$.ajax({
+					url : "${pageContext.request.contextPath}/comment/list.do",
+					type : "post",
+					data : {boardId :"${result.reviewId}"},
+					dataType : "html",
+					success : function(data){
+						$(".comment-list").html(data);
+					},error : function(){
+						alert(11111);
+						//alert("error : list")
+					}
+				});
+			}).fail(function( jqXHR, textStatus ) {
+			  alert( "Request failed: " + textStatus );
+			});	
+		}
+	});
+	
+	
+	
+	
 </script>
 
 </body>

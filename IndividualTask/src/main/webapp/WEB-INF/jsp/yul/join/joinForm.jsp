@@ -101,6 +101,7 @@
 
 </section>
 
+<%@ include file = "/WEB-INF/jsp/yul/comm/footer.jsp"%>
 
 <script type="text/javascript">
 	

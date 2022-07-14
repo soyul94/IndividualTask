@@ -23,6 +23,7 @@ import egovframework.let.utl.fcc.service.FileMngUtil;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import egovframework.soyul.member.MemberVO;
+import egovframework.soyul.member.service.MemberManageService;
 import egovframework.soyul.orders.OrdersVO;
 import egovframework.soyul.orders.service.OrdersService;
 import egovframework.soyul.review.ReviewVO;
@@ -34,23 +35,66 @@ public class OrdersController {
 	
 	@Resource(name="ordersService")
 	private OrdersService ordersService;
+
+	/** mberManageService */
+	@Resource(name = "memberManageService")
+	private MemberManageService memberManageService;
+	
+	
+	
+	@RequestMapping(value = "/select.do")
+	public String BoardSelect(@ModelAttribute("searchVO")OrdersVO ordersVO, HttpServletRequest request, ModelMap model) throws Exception {
+
+		System.out.println("/orders/select.do 컨트롤 호출");
+
+		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		model.addAttribute("USER_INFO", user);
+
+		OrdersVO result = ordersService.ordersSelect(ordersVO);
+		System.out.println(result);
+
+	
+		model.addAttribute("result", result);
+		return "";
+	}
 	
 	//주문 목록 페이지
 	@RequestMapping(value="/list.do")
 	public String ordersList(@ModelAttribute("searchVO")OrdersVO ordersVO, HttpServletRequest request, Model model)throws Exception {
 		
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		
+		PaginationInfo paginationInfo = new PaginationInfo();
+		
+		paginationInfo.setCurrentPageNo(ordersVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(ordersVO.getPageUnit());
+		paginationInfo.setPageSize(ordersVO.getPageSize());
+		
+		ordersVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		ordersVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		ordersVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		int totCot = 0;
+		
 		if (user == null || user.getId() == null) {
 			model.addAttribute("message", "로그인 후 사용가능합니다.");
 			return "forward:/main.do"; // 로그인이 되어있지 않으면 리스트로 돌려보냄
 		}
 		else if(user.getId().equals("admin")) {
+			totCot = ordersService.allOrdersCnt(user.getId());
+			paginationInfo.setTotalRecordCount(totCot);
+			model.addAttribute("paginationInfo", paginationInfo);
+			
 			List<EgovMap> allOrdersList = ordersService.allOrdersList();
 			model.addAttribute("ordersList",allOrdersList);
 			return "";
 		}
 		else {
 			model.addAttribute("USER_INFO", user); // jsp에서 사용하기 위해 로그인 정보를 Attribute함.
+			
+			totCot = ordersService.memberOrdersCnt(user.getId());
+			paginationInfo.setTotalRecordCount(totCot);
+			model.addAttribute("paginationInfo", paginationInfo);
 			
 			List<EgovMap> memberOrdersList = ordersService.memberOrdersList(user.getId());
 			model.addAttribute("ordersList",memberOrdersList);
@@ -59,10 +103,9 @@ public class OrdersController {
 		
 	}
 	
-	@RequestMapping(value="/Form.do")
+	@RequestMapping(value="/form.do")
 	public String ordersForm(@ModelAttribute("searchVO")OrdersVO ordersVO, HttpServletRequest request, Model model)throws Exception {
-		MemberVO member = (MemberVO)request.getSession().getAttribute("LoginVO");
-		
+		MemberVO member;
 		
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		if (user == null || user.getId() == null) {
@@ -73,14 +116,16 @@ public class OrdersController {
 			return "";
 		}
 		else {
-			model.addAttribute("USER_INFO", user); // jsp에서 사용하기 위해 로그인 정보를 Attribute함.
+			member = memberManageService.selectMber(user.getId());
+			ordersVO = ordersService.ordersSelect(ordersVO);
+			System.out.println(member);
+			System.out.println(ordersVO);
+			
+			model.addAttribute("result",ordersVO);
+			model.addAttribute("USER_INFO", member); // jsp에서 사용하기 위해 로그인 정보를 Attribute함.
 		}
 		
-		if(ordersVO.getOrdererId()!=null && ordersVO.getOrdererId().equals(""))
-			ordersVO = ordersService.ordersSelect(ordersVO.getOrdererId());
-		
-		model.addAttribute("order",ordersVO);
-		
+			
 		return "yul/orders/memberOrdersForm";
 	}
 	
@@ -98,6 +143,31 @@ public class OrdersController {
 		
 		
 		ordersService.ordersInsert(ordersVO);
+		
+		return "forward:/orders/list.do";
+	}
+	
+	
+	
+	@RequestMapping(value="update.do")
+	public String memberOrdersUpdate(@ModelAttribute("searchVO")OrdersVO ordersVO, Model model)throws Exception {
+		
+		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
+		if (user == null || user.getId() == null) {
+			model.addAttribute("message", "로그인 후 사용가능합니다.");
+			return "forward:/main.do"; // 로그인이 되어있지 않으면 리스트로 돌려보냄
+		}
+		else {
+			model.addAttribute("USER_INFO", user); // jsp에서 사용하기 위해 로그인 정보를 Attribute함.
+		}
+		
+		
+		//ordersVO = ordersService.ordersSelect(ordersVO);
+		
+		int num = ordersService.memberOrdersUpdate(ordersVO);
+		
+		if(num!=0)
+			model.addAttribute("message", "주문이 변경되었습니다.");
 		
 		return "forward:/orders/list.do";
 	}

@@ -101,6 +101,7 @@
 </div>
 
 
+
 <%-- 댓글작성 --%>
 <form action="${pageContext.request.contextPath}/comment/insert.do" method="post">
 		<input type="hidden" name="boardId" value="${result.reviewId}" />
@@ -113,6 +114,11 @@
 		<c:param name="boardId" value="${result.reviewId}"/>
 	</c:import>
 </div>
+
+
+
+<%-- footer --%>
+<%@ include file = "/WEB-INF/jsp/yul/comm/footer.jsp"%>
 
 <script>
 	$(document).ready(function(){

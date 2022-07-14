@@ -97,7 +97,6 @@ public class ReviewController {
 		model.addAttribute("resultList",resultList);
 		
 		int totCot = reviewService.selectReviewListCnt(reviewVO);
-		
 		paginationInfo.setTotalRecordCount(totCot);
 		model.addAttribute("paginationInfo", paginationInfo);
 		

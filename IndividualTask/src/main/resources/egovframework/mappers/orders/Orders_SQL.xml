@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.soyul.orders.service.impl.OrdersMapper">
+
+	<resultMap id="ordersVO" type="egovframework.soyul.orders.OrdersVO">
+		<result property="orderId" column="ORDER_ID"/>
+		<result property="ordererId" column="ORDERER_ID"/>
+		<result property="ordererName" column="ORDERER_NAME"/>
+		<result property="orderDate" column="ORDER_DATE"/>
+		<result property="recipientAddress" column="RECIPIENT_ADDRESS"/>
+		<result property="recipientDetailAddress" column="RECIPIENT_DETAIL_ADDRESS"/>
+		<result property="recipientPhone" column="RECIPIENT_PHONE"/>
+		<result property="requestTerm" column="REQUESTED_TERM"/>
+		<result property="orderProductFirst" column="ORDER_PRODUCT_FIRST"/>
+		<result property="orderProductMiddle" column="ORDER_PRODUCT_MIDDLE"/>
+		<result property="orderProductLast" column="ORDER_PRODUCT_LAST"/>
+		<result property="orderProducPackage" column="ORDER_PRODUCT_PACKAGE"/>
+		<result property="orderAmount" column="ORDER_AMOUNT"/>
+		<result property="reviewCheak" column="REVIEW_CHEAK"/>
+		<result property="orderApproval" column="ORDER_APPROVAL"/>
+		<result property="orderState" column="ORDER_STATE"/>
+	</resultMap>
+	
+	
+	
+	<select id="ordersSelect" parameterType="egovframework.soyul.orders.OrdersVO"  resultMap="ordersVO">
+		SELECT * FROM ORDERS 
+		WHERE ORDER_ID = #{orderId} and ORDERER_ID = #{ordererId}
+	</select>
+
+	<select id="memberOrdersCnt" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM ORDERS 
+		WHERE ORDERER_ID = #{ordererId}
+	</select>
+	<select id="allOrdersCnt" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM ORDERS 
+	</select>
+	
+	<select id="allOrdersList" resultType="egovMap">
+		select
+			ORDER_ID, 
+			ORDERER_ID,
+			ORDERER_NAME,
+			ORDER_DATE,
+			RECIPIENT_ADDRESS,
+			RECIPIENT_DETAIL_ADDRESS,
+			RECIPIENT_PHONE,
+			REQUESTED_TERM,
+			ORDER_PRODUCT_FIRST,
+			ORDER_PRODUCT_MIDDLE,
+			ORDER_PRODUCT_LAST,
+			ORDER_PRODUCT_PACKAGE,
+			ORDER_AMOUNT,
+			REVIEW_CHEAK,
+			ORDER_APPROVAL,
+			ORDER_STATE 
+		from ORDERS 
+	</select>
+	
+	<select id="memberOrdersList" resultType="egovMap">
+		select
+			ORDER_ID, 
+			ORDERER_ID,
+			ORDERER_NAME,
+			ORDER_DATE,
+			RECIPIENT_ADDRESS,
+			RECIPIENT_DETAIL_ADDRESS,
+			RECIPIENT_PHONE,
+			REQUESTED_TERM,
+			ORDER_PRODUCT_FIRST,
+			ORDER_PRODUCT_MIDDLE,
+			ORDER_PRODUCT_LAST,
+			ORDER_PRODUCT_PACKAGE,
+			ORDER_AMOUNT,
+			REVIEW_CHEAK,
+			ORDER_APPROVAL,
+			ORDER_STATE 
+		from ORDERS 
+		where ORDERER_ID = #{ordererId}
+	</select>
+	
+	<!-- <select id="AllOrdersListCnt" resultType="int">
+		select COUNT(*) from ORDERS 
+	</select> -->
+	
+	<insert id="ordersInsert" parameterType="egovframework.soyul.orders.OrdersVO"  >
+		insert into ORDERS(
+			ORDER_ID, 
+			ORDERER_ID,
+			ORDERER_NAME,
+			ORDER_DATE,
+			RECIPIENT_ADDRESS,
+			RECIPIENT_DETAIL_ADDRESS,
+			RECIPIENT_PHONE,
+			REQUESTED_TERM,
+			ORDER_PRODUCT_FIRST,
+			ORDER_PRODUCT_MIDDLE,
+			ORDER_PRODUCT_LAST,
+			ORDER_PRODUCT_PACKAGE,
+			ORDER_AMOUNT,
+			REVIEW_CHEAK,
+			ORDER_APPROVAL,
+			ORDER_STATE 
+		) values(	
+			#{orderId},
+			#{ordererId},
+			#{ordererName},
+			now(),
+			#{recipientAddress},
+			#{recipientDetailAddress},
+			#{recipientPhone},
+			#{requestTerm},
+			#{orderProductFirst},
+			#{orderProductMiddle},
+			#{orderProductLast},
+			#{orderProducPackage},
+			#{orderAmount},
+			'미작성',
+			'미승인',
+			'승인 대기'
+		)
+	</insert>
+	
+	<update id="memberOrdersUpdate" parameterType="egovframework.soyul.orders.OrdersVO">
+		update ORDERS set
+			RECIPIENT_ADDRESS=#{recipientAddress},
+			RECIPIENT_DETAIL_ADDRESS=#{recipientDetailAddress},
+			RECIPIENT_PHONE=#{recipientPhone},
+			REQUESTED_TERM=#{requestTerm},
+			ORDER_PRODUCT_FIRST=#{orderProductFirst},
+			ORDER_PRODUCT_MIDDLE=#{orderProductMiddle},
+			ORDER_PRODUCT_LAST=#{orderProductLast},
+			ORDER_PRODUCT_PACKAGE=#{orderProducPackage},
+			ORDER_AMOUNT=#{orderAmount},
+		where ORDER_ID=#{orderId} and ORDERER_ID=#{ordererId}
+	</update>
+	
+	<delete id="deleteOrders" parameterType="egovframework.soyul.orders.OrdersVO">
+		delete from ORDERS where BOARD_ID=#{orderId} and COMMENT_ID=#{commentId}
+	</delete>
+	
+</mapper>	  
+

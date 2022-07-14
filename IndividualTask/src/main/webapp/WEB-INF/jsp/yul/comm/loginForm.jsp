@@ -38,6 +38,7 @@
 			<form action="${pageContext.request.contextPath}/login/actionLogin.do" id="frmLogin" name="frmLogin"
 				method="post" onsubmit="return vali()">
 				<input type="hidden" name="userSe" value="USR" />
+				<input type="hidden" name="address" value="${address}" />
 				<fieldset>
 					<legend>로그인을 위한 아이디/비밀번호 입력</legend>
 					<div class="ipt-row">
@@ -62,7 +63,7 @@
 	</header>
 	
 
-
+	<%@ include file = "/WEB-INF/jsp/yul/comm/footer.jsp"%>
 
 	<script>
 		/* $(document).ready(function() {

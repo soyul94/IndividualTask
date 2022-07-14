@@ -30,7 +30,7 @@
 						<c:choose>
 							<c:when test="${empty sessionScope.LoginVO.id}">
 								<li><a href="${pageContext.request.contextPath}/member/joinForm.do">Join</a></li>
-								<li><a href="${pageContext.request.contextPath}/login/actionLogin.do" class="login">Login</a></li>
+								<li><a href="${pageContext.request.contextPath}/login/loginForm.do" class="login">Login</a></li>
 							</c:when>
 							<c:otherwise>
 								<li><a href="#">MyPage</a></li>
@@ -48,7 +48,7 @@
 					<ul>
 						<li><a href="#">Product</a></li>
 						<li><a href="#">Package</a></li>
-						<li><a href="#">Hand-Tailor</a></li>
+						<li><a href="<c:url value='/orders/list.do' />">Hand-Tailor</a></li>
 						<li><a href="<c:url value='/review/list.do' />">Review</a></li>
 					</ul>
 				</div>

@@ -7,11 +7,17 @@ import egovframework.soyul.orders.OrdersVO;
 
 public interface OrdersService {
 
-	public OrdersVO ordersSelect(String orderId) throws Exception;
+	public OrdersVO ordersSelect(OrdersVO ordersVO) throws Exception;
 
 	public void ordersInsert(OrdersVO ordersVO) throws Exception;
 
-	public List<EgovMap> allOrdersList()throws Exception;
+	public List<EgovMap> allOrdersList() throws Exception;
 	
-	public List<EgovMap> memberOrdersList(String ordererId)throws Exception;
+	public List<EgovMap> memberOrdersList(String ordererId) throws Exception;
+	
+	public int memberOrdersCnt(String ordererId) throws Exception;
+
+	public int allOrdersCnt(String ordererId) throws Exception;
+
+	public int memberOrdersUpdate(OrdersVO ordersVO) throws Exception;
 }

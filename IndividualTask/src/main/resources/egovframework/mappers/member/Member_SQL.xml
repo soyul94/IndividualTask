@@ -3,6 +3,28 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.soyul.member.service.impl.MemberMapper">
 
+
+	<resultMap id="memberVO" type="egovframework.soyul.member.MemberVO">
+		<result property="emplyrId" column="EMPLYR_ID"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="sexdstnCode" column="SEXDSTN_CODE"/>
+		<result property="ihidnum" column="IHIDNUM"/>
+		<result property="passwordHint" column="PASSWORD_HINT"/>
+		<result property="passwordCnsr" column="PASSWORD_CNSR"/>
+		<result property="mbtlnum" column="MBTLNUM"/>
+		<result property="zip" column="ZIP"/>
+		<result property="houseAdres" column="HOUSE_ADRES"/>
+		<result property="detailAdres" column="DETAIL_ADRES"/>
+		<result property="emailAdres" column="EMAIL_ADRES"/>
+		<result property="esntlId" column="ESNTL_ID"/>
+		<result property="emplyrSttusCode" column="EMPLYR_STTUS_CODE"/>
+		<result property="sbscrbDe" column="SBSCRB_DE"/>
+	</resultMap>
+
+    
+
+
 <!-- 약관정보 관련 VO -->
 <!--     <resultMap id="stplatMap" type="egovframework.com.uss.umt.service.StplatVO">
         <result property="useStplatId" column="USE_STPLAT_ID"/>
@@ -131,33 +153,26 @@ FROM(
         
 </delete>
     
-<select id="selectMber" resultType="egovframework.soyul.member.MemberVO">
-        
-            SELECT
-                ESNTL_ID          uniqId,
-                'USR01'          userTy,
-                MBER_ID          mberId,
-                MBER_NM          mberNm,
-                PASSWORD         password,
-                PASSWORD_HINT    passwordHint,
-                PASSWORD_CNSR    passwordCnsr,
-                IHIDNUM          ihidnum,
-                SEXDSTN_CODE     sexdstnCode,
-                ZIP              zip,
-                ADRES            adres,
-                AREA_NO          areaNo,
-                MBER_STTUS       mberSttus,
-                DETAIL_ADRES     detailAdres,
-                END_TELNO        endTelno,
-                MBTLNUM      moblphonNo,
-                GROUP_ID         groupId,
-                MBER_FXNUM       mberFxnum,
-                MBER_EMAIL_ADRES mberEmailAdres,
-                MIDDLE_TELNO     middleTelno,
-                SBSCRB_DE        sbscrbDe,
-                LOCK_AT          lockAt
-            FROM COMTNGNRLMBER
-            WHERE ESNTL_ID=#{uniqId}        
+<select id="selectMber" resultMap="memberVO">
+
+	SELECT
+		EMPLYR_ID ,
+		PASSWORD ,
+		USER_NM ,
+		SEXDSTN_CODE ,
+		IHIDNUM ,
+		PASSWORD_HINT ,
+		PASSWORD_CNSR ,
+		MBTLNUM ,
+		ZIP ,
+		HOUSE_ADRES ,
+		DETAIL_ADRES ,
+		EMAIL_ADRES ,
+		ESNTL_ID ,
+		EMPLYR_STTUS_CODE,
+		SBSCRB_DE
+	FROM LETTNEMPLYRINFO
+	WHERE EMPLYR_ID=#{uniqId}        
 </select>
     
     

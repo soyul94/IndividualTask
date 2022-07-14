@@ -181,6 +181,10 @@ body{
 		</div>
 	</div>
 </div>
+
+<%-- footer --%>
+<%@ include file = "/WEB-INF/jsp/yul/comm/footer.jsp"%>
+
 <script>
 	<c:if test="${not empty message}">
 		alert("${message}");

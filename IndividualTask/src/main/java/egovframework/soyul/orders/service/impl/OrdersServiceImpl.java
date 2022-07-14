@@ -35,8 +35,8 @@ public class OrdersServiceImpl extends EgovAbstractServiceImpl implements Orders
 	private EgovIdGnrService idgenService;
 
 	@Override
-	public OrdersVO ordersSelect(String orderId) throws Exception {
-		return ordersMapper.ordersSelect(orderId);
+	public OrdersVO ordersSelect(OrdersVO ordersVO) throws Exception {
+		return ordersMapper.ordersSelect(ordersVO);
 	}
 
 	@Override
@@ -55,6 +55,21 @@ public class OrdersServiceImpl extends EgovAbstractServiceImpl implements Orders
 	@Override
 	public List<EgovMap> memberOrdersList(String ordererId) throws Exception {
 		return ordersMapper.memberOrdersList(ordererId);
+	}
+
+	@Override
+	public int memberOrdersCnt(String ordererId) throws Exception {
+		return ordersMapper.memberOrdersCnt(ordererId);
+	}
+
+	@Override
+	public int allOrdersCnt(String ordererId) throws Exception {
+		return ordersMapper.allOrdersCnt(ordererId);
+	}
+
+	@Override
+	public int memberOrdersUpdate(OrdersVO ordersVO) throws Exception {
+		return ordersMapper.memberOrdersUpdate(ordersVO);
 	}
 	
 }

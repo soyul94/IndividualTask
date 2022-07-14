@@ -11,19 +11,35 @@ import egovframework.com.cmm.ComDefaultVO;
 public class OrdersVO extends ComDefaultVO implements Serializable {
 
 	private String orderId;
+	
 	private String ordererId;
+	
 	private String ordererName;
+	
+	private Date orderDate;
+	
 	private String recipientAddress;
+	
 	private String recipientDetailAddress;
+	
 	private String recipientPhone;
+	
 	private String requestTerm;
+	
 	private String orderProductFirst;
+	
 	private String orderProductMiddle;
+	
 	private String orderProductLast;
+	
 	private String orderProducPackage;
-	private String orderAmount;
+	
+	private int orderAmount;
+	
 	private String reviewCheak;
+	
 	private String orderApproval;
+	
 	private String orderState;
 	
 	
@@ -46,6 +62,12 @@ public class OrdersVO extends ComDefaultVO implements Serializable {
 	}
 	public void setOrdererName(String ordererName) {
 		this.ordererName = ordererName;
+	}
+	public Date getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
 	}
 	public String getRecipientAddress() {
 		return recipientAddress;
@@ -95,10 +117,10 @@ public class OrdersVO extends ComDefaultVO implements Serializable {
 	public void setOrderProducPackage(String orderProducPackage) {
 		this.orderProducPackage = orderProducPackage;
 	}
-	public String getOrderAmount() {
+	public int getOrderAmount() {
 		return orderAmount;
 	}
-	public void setOrderAmount(String orderAmount) {
+	public void setOrderAmount(int orderAmount) {
 		this.orderAmount = orderAmount;
 	}
 	public String getReviewCheak() {

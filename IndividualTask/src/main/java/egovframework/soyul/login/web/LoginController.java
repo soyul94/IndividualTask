@@ -35,15 +35,18 @@ public class LoginController {
 //		return "/yul/comm/logForm";
 //	}
 	
-	@GetMapping(value="/actionLogin.do")
-	public String actionLogin( ModelMap model) throws Exception{
+	@RequestMapping(value="/loginForm.do")
+	public String actionLogin(HttpServletRequest request, ModelMap model) throws Exception{
+		
+		String address = request.getHeader("Referer");
+		model.addAttribute("address",address);
 		
 		return "/yul/comm/loginForm";
 	}
 	
 	
-	@PostMapping(value="/actionLogin.do")
-	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model) throws Exception{
+	@RequestMapping(value="/actionLogin.do")
+	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, String address, HttpServletRequest request, ModelMap model) throws Exception{
 		
 		LoginVO resultVO = loginService.actionLogin(loginVO); //로그인한 사람이 상세정보 조회
 		
@@ -51,11 +54,13 @@ public class LoginController {
 		if(resultVO!=null && resultVO.getId()!=null && !resultVO.getId().equals("")) {
 			request.getSession().setAttribute("LoginVO", resultVO);
 //			return "forward:"+request.getHeader("Referer");
-			return "forward:/main.do";
+			return "redirect:"+address;
+//			return "forward:/main.do";
 		}
 		else {
 			model.addAttribute("loginMessage",egovMessageSource.getMessage("fail.common.login"));
-			return "/yul/comm/loginForm";
+//			return "/yul/comm/loginForm";
+			return "forward:/login/loginForm.do";
 		}
 		
 	}

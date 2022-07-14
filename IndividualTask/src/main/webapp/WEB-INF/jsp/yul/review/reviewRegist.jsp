@@ -236,6 +236,11 @@ $(function(){
 		</form>
 	</div>
 </div>
+
+<%-- footer --%>
+<%@ include file = "/WEB-INF/jsp/yul/comm/footer.jsp"%>
+
+
 	<%-- HTML의 태그는 위에서 아래로 왼쪽에서 오른쪽으로 실행된다. 그래서 동작은 태그가 먼저 생성이 된 후에 실행되어야한다.--%>
 	<script>
 	$(document).ready(function(){ // HTML이 렌더링 완료된 후에 function이 실행되도록 해줌. 

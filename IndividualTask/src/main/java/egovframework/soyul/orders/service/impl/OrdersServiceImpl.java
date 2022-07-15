@@ -56,6 +56,26 @@ public class OrdersServiceImpl extends EgovAbstractServiceImpl implements Orders
 	public List<EgovMap> memberOrdersList(String ordererId) throws Exception {
 		return ordersMapper.memberOrdersList(ordererId);
 	}
+	
+	@Override
+	public List<String> memberOrdersListForReview(String ordererId) throws Exception {
+		List<EgovMap> list = ordersMapper.memberOrdersList(ordererId);
+		List<String> memberList = new ArrayList<String>();
+		
+		
+		for(int i=0; i<list.size(); i++) {
+//			String product = list.get(i).get("orderProductFirst") + list.get(i).get("orderProductMiddle")
+//							+ list.get(i).get("orderProductLast") + list.get(i).get("orderProducPackage") ;
+			
+			String product = (String)list.get(i).get("orderProductFirst")+" + ";
+			product += ((String)list.get(i).get("orderProductMiddle")+" + ");
+			product += ((String)list.get(i).get("orderProductLast")+" + ");
+			product += (String)list.get(i).get("orderProductPackage");
+			memberList.add(product);
+		}
+		
+		return memberList;
+	}
 
 	@Override
 	public int memberOrdersCnt(String ordererId) throws Exception {
@@ -71,5 +91,7 @@ public class OrdersServiceImpl extends EgovAbstractServiceImpl implements Orders
 	public int memberOrdersUpdate(OrdersVO ordersVO) throws Exception {
 		return ordersMapper.memberOrdersUpdate(ordersVO);
 	}
+
+	
 	
 }

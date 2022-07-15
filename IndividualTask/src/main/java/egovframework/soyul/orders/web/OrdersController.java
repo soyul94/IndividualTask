@@ -1,7 +1,6 @@
 package egovframework.soyul.orders.web;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -11,23 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import egovframework.com.cmm.LoginVO;
-import egovframework.com.cmm.service.EgovFileMngService;
-import egovframework.com.cmm.service.FileVO;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
-import egovframework.let.utl.fcc.service.EgovStringUtil;
-import egovframework.let.utl.fcc.service.FileMngUtil;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import egovframework.soyul.member.MemberVO;
 import egovframework.soyul.member.service.MemberManageService;
 import egovframework.soyul.orders.OrdersVO;
 import egovframework.soyul.orders.service.OrdersService;
-import egovframework.soyul.review.ReviewVO;
-import egovframework.soyul.review.service.ReviewService;
 
 @Controller
 @RequestMapping(value="/orders")
@@ -75,6 +66,13 @@ public class OrdersController {
 		ordersVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
 		int totCot = 0;
+		
+		//리뷰 주문 목록 테이스
+		List<String> orderlist = ordersService.memberOrdersListForReview(user.getId());
+		for(String e : orderlist) {
+			System.out.println(e);
+		}
+		
 		
 		if (user == null || user.getId() == null) {
 			model.addAttribute("message", "로그인 후 사용가능합니다.");
@@ -140,7 +138,7 @@ public class OrdersController {
 		else {
 			model.addAttribute("USER_INFO", user); // jsp에서 사용하기 위해 로그인 정보를 Attribute함.
 		}
-		
+		System.out.println(ordersVO);
 		
 		ordersService.ordersInsert(ordersVO);
 		
@@ -163,6 +161,7 @@ public class OrdersController {
 		
 		
 		//ordersVO = ordersService.ordersSelect(ordersVO);
+		System.out.println(ordersVO);
 		
 		int num = ordersService.memberOrdersUpdate(ordersVO);
 		

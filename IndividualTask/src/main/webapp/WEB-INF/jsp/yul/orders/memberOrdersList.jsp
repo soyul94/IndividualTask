@@ -75,7 +75,11 @@
 						<th>보습 성분</th>
 						<td><c:out value="${vo.orderProductMiddle}" /></td>
 						<th>제품 패키지</th>
-						<td><c:out value="${vo.orderProducPackage}" /></td>
+						<td><c:out value="${vo.orderProductPackage}" /></td>
+					</tr>
+					<tr>
+						<th>요청사항</th>
+						<td><c:out value="${vo.requestedTerm}" /></td>
 					</tr>
 				</table>
 				<p>배송지 정보</p>

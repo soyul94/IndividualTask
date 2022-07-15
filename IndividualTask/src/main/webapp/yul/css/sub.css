@@ -128,3 +128,50 @@
 }
 
 /* 회원가입 폼 */
+
+
+/* 리뷰 리스트 */
+.container {
+	max-width: 1200px;
+	background-color: aqualightblue;
+}
+
+.reviewList {
+	width: 100%;
+	text-align: center;
+	background-color: lightblue;
+}
+
+.reviewList .reviewBody {
+	width: 47%;
+	height: 200px;
+	margin: 1%;
+	padding: 0;
+	display: inline-block;
+	background-color: lightskyblue;
+}
+
+.reviewList .reviewBody .reviewTable {
+	float:right;
+	width: 59%;
+	height: 100%;
+	background-color: beige;
+}
+
+.reviewList .reviewBody .reviewTable table {
+	margin: 5% 0;
+	line-height: 150%;
+	border: 1px solid black;
+}
+
+.reviewList .reviewBody .reviewTable table th,td {
+	padding: 0 15px;
+}
+
+.reviewList .reviewBody .reviewSum {
+	float:left;
+	width: 39%;
+	height: 200px;
+	background-color: aquamarine;
+	margin: 0;
+}

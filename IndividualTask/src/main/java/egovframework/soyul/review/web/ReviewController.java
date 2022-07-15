@@ -21,7 +21,7 @@ import egovframework.let.utl.fcc.service.EgovStringUtil;
 import egovframework.let.utl.fcc.service.FileMngUtil;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import egovframework.soyul.member.MemberVO;
+import egovframework.soyul.orders.service.OrdersService;
 import egovframework.soyul.review.ReviewVO;
 import egovframework.soyul.review.service.ReviewService;
 
@@ -32,6 +32,9 @@ public class ReviewController {
 	@Resource(name="reviewService")
 	private ReviewService reviewService;
 	
+	@Resource(name="ordersService")
+	private OrdersService ordersService;
+
 	@Resource(name="EgovFileMngService")
 	private EgovFileMngService fileMngService;
 	
@@ -104,7 +107,7 @@ public class ReviewController {
 		model.addAttribute("USER_INFO",user);
 		
 				
-		return "yul/review/reviewList";
+		return "yul/review/reviewList2";
 	}
 	
 	
@@ -123,6 +126,8 @@ public class ReviewController {
 			return "forward:/review/list.do"; // 로그인이 되어있지 않으면 리스트로 돌려보냄
 		} else {
 			model.addAttribute("USER_INFO", user); // jsp에서 사용하기 위해 로그인 정보를 Attribute함.
+			List<String> orderList = ordersService.memberOrdersListForReview(user.getId());
+			model.addAttribute("orderList", orderList);
 		}
 		
 
@@ -182,6 +187,9 @@ public class ReviewController {
 		// 현재 작성자 기준의 IP를 불러옴(공인IP에 대한 정보)
 		reviewVO.setCreatIp(request.getRemoteAddr());
 		reviewVO.setUserId(user.getId());
+		
+		if(!user.getId().equals("admin"))
+			reviewVO.setNoticeAt("N");
 
 		reviewService.insertReview(reviewVO);
 

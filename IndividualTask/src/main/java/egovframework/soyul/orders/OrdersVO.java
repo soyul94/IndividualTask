@@ -24,7 +24,7 @@ public class OrdersVO extends ComDefaultVO implements Serializable {
 	
 	private String recipientPhone;
 	
-	private String requestTerm;
+	private String requestedTerm;
 	
 	private String orderProductFirst;
 	
@@ -87,11 +87,11 @@ public class OrdersVO extends ComDefaultVO implements Serializable {
 	public void setRecipientPhone(String recipientPhone) {
 		this.recipientPhone = recipientPhone;
 	}
-	public String getRequestTerm() {
-		return requestTerm;
+	public String getRequestedTerm() {
+		return requestedTerm;
 	}
-	public void setRequestTerm(String requestTerm) {
-		this.requestTerm = requestTerm;
+	public void setRequestedTerm(String requestedTerm) {
+		this.requestedTerm = requestedTerm;
 	}
 	public String getOrderProductFirst() {
 		return orderProductFirst;

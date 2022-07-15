@@ -113,6 +113,70 @@ body{
 				| 현재 페이지 <strong><c:out value="${paginationInfo.currentPageNo}"/></strong> 
 				/ <c:out value="${paginationInfo.totalPageCount}"/>
 			</div>
+			
+			
+			<div class="reviewList">
+			<c:forEach var="result" items="${resultList}" varStatus="status">
+					<div class="reviewBody">
+		                <div class="reviewSum">
+		                	<c:if test="${not empty result.atchFileNm}">
+								<c:url var="thumbUrl" value="/cmm/fms/getThumbImage.do">
+									<c:param name="thumbYn" value="Y"/>
+									<c:param name="atchFileNm" value="${result.atchFileNm}"/>
+								</c:url>
+								<img src="${thumbUrl}" alt="썸네일">
+							</c:if>
+		                </div>
+		                <div class="reviewTable">
+		                <table>
+		                	<tr>
+                        		<td colspan="6">
+                        			<fmt:formatDate value="${result.frstRegistPnttm}" pattern="yyyy-MM-dd"/>
+                        		</td>
+                    		</tr>
+		                    <tr>
+		                        <td>번호</td>
+		                        <td>
+		                        	<c:out value="${paginationInfo.totalRecordCount-((searchVO.pageIndex-1)*searchVO.pageUnit)-(status.count-1)}"/>
+		                        </td>
+		                        <td>좋아요</td>
+		                        <td>999</td>
+		                        <td>조회수</td>
+		                        <td><c:out value="${result.inqireCo}"/></td>
+		                    </tr>
+		                    <tr>
+		                        <td colspan="1">피부</td>
+		                        <td colspan="3">${result.skinType}</td>
+		                        <td colspan="1">작성자</td>
+                        		<td colspan="1"><c:out value="${result.frstRegisterId}"/></td>
+		                    </tr>
+		                    <tr>
+		                        <td colspan="2" style="width: 10%;">제목</td>
+		                        <td colspan="4">
+									<c:url var="viewUrl" value="/review/select.do${_BASE_PARAM}">
+										<c:param name="reviewId" value="${result.reviewId}"/>
+										<c:param name="pageIndex" value="${searchVO.pageIndex}"/>
+									</c:url>
+									<a href="${viewUrl}">
+										<c:if test="${result.othbcAt eq 'Y'}">
+											<img src="/asset/BBSTMP_0000000000001/images/ico_board_lock.gif" alt="비밀글 아이콘"/>
+										</c:if>
+										<c:out value="${result.reviewSj}"/>
+									</a>
+		                        </td>
+		                    </tr>
+		                    <tr>
+		                        <td colspan="2">제품</td>
+		                        <td colspan="4"> 베이스 워터 n + 보습제 n + 기능성 성분 n + 패키지 n </td>
+		                    </tr>
+		                </table>
+		                </div>
+           			</div>
+			</c:forEach>
+			</div>
+			
+			
+			
 					<%--일반글 --%>
 					<table class="list_table">
 						<thead>

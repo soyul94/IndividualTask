@@ -135,6 +135,7 @@ $(function(){
 							<input type="text" id="reviewSj" name="reviewSj" title="제목입력" class="q3" value="<c:out value="${result.reviewSj}"/>" />
 						</td> 
 					</tr>
+					<c:if test="${sessionScope.LoginVO.id eq 'admin'}">
 					<tr><%-- scope: 읽기 형식 ???? 웹접근성에 관련된거 같은데 무슨말인지 모르겠다 --%>
 						<th scope="row">공지여부</th>
 						<td>
@@ -145,6 +146,7 @@ $(function(){
 							<input type="radio" id="noticeAtN" value="N" name="noticeAt" <c:if test="${result.noticeAt ne 'Y'}">checked="checked"</c:if>/>
 						</td>			<%-- result.noticeAt eq 'N'가 아니라 result.noticeAt ne 'Y'인 이유 : null값이 들어올 경우에는 디폴트가 N으로 동작하도록 하기 위해 --%>
 					</tr>
+					</c:if>
 					<tr>
 						<th scope="row">비공개여부</th>
 						<td>
@@ -172,9 +174,12 @@ $(function(){
 						<td>
 							<select name="reviewProduct">
 								<option value="-- 선택하세요 --"> -- 선택하세요 -- </option>
-								<option value="주문 1" <c:if test="${result.reviewProduct eq '주문 1'}">selected="selected"</c:if>>${USER_INFO.id}의 주문 1</option>
+								<c:forEach items="${orderList}" var="order">
+									<option value="${order}" <c:if test="${result.reviewProduct eq order}">selected="selected"</c:if>>${order}</option>
+								</c:forEach>
+								<%-- <option value="주문 1" <c:if test="${result.reviewProduct eq '주문 1'}">selected="selected"</c:if>>${USER_INFO.id}의 주문 1</option>
 								<option value="주문 2" <c:if test="${result.reviewProduct eq '주문 2'}">selected="selected"</c:if>>${USER_INFO.id}의 주문 2</option>
-								<option value="주문 3" <c:if test="${result.reviewProduct eq '주문 3'}">selected="selected"</c:if>>${USER_INFO.id}의 주문 3</option>
+								<option value="주문 3" <c:if test="${result.reviewProduct eq '주문 3'}">selected="selected"</c:if>>${USER_INFO.id}의 주문 3</option> --%>
 							</select>
 						</td>
 					<tr>

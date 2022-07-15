@@ -13,7 +13,7 @@
 		<result property="recipientAddress" column="RECIPIENT_ADDRESS"/>
 		<result property="recipientDetailAddress" column="RECIPIENT_DETAIL_ADDRESS"/>
 		<result property="recipientPhone" column="RECIPIENT_PHONE"/>
-		<result property="requestTerm" column="REQUESTED_TERM"/>
+		<result property="requestedTerm" column="REQUESTED_TERM"/>
 		<result property="orderProductFirst" column="ORDER_PRODUCT_FIRST"/>
 		<result property="orderProductMiddle" column="ORDER_PRODUCT_MIDDLE"/>
 		<result property="orderProductLast" column="ORDER_PRODUCT_LAST"/>
@@ -112,7 +112,7 @@
 			#{recipientAddress},
 			#{recipientDetailAddress},
 			#{recipientPhone},
-			#{requestTerm},
+			#{requestedTerm},
 			#{orderProductFirst},
 			#{orderProductMiddle},
 			#{orderProductLast},
@@ -129,12 +129,12 @@
 			RECIPIENT_ADDRESS=#{recipientAddress},
 			RECIPIENT_DETAIL_ADDRESS=#{recipientDetailAddress},
 			RECIPIENT_PHONE=#{recipientPhone},
-			REQUESTED_TERM=#{requestTerm},
+			REQUESTED_TERM=#{requestedTerm},
 			ORDER_PRODUCT_FIRST=#{orderProductFirst},
 			ORDER_PRODUCT_MIDDLE=#{orderProductMiddle},
 			ORDER_PRODUCT_LAST=#{orderProductLast},
 			ORDER_PRODUCT_PACKAGE=#{orderProducPackage},
-			ORDER_AMOUNT=#{orderAmount},
+			ORDER_AMOUNT=#{orderAmount}
 		where ORDER_ID=#{orderId} and ORDERER_ID=#{ordererId}
 	</update>
 	

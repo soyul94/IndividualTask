@@ -24,25 +24,21 @@
 <div id="contentContainer">
 	<aside id="subMenu">
 		<ul>
-			<li><a>My Order List</a></li>
-			<li><a>Make Order Form</a></li>
+			<li><a href="<c:url value='/orders/list.do' />">My Order List</a></li>
+			<li><a href="<c:url value='/orders/form.do' />">Make Order Form</a></li>
 		</ul>
 	</aside>
 	<section>
-	
 		<c:choose> <%-- 아래의 폼에 담긴 정보가 이동할 주소를 결정 --%>
 			<c:when test="${not empty searchVO.orderId}">
-				<c:url var="actionUrl" value="/orders/update.do" >
-					<c:param name="orderId" value="${result.orderId}" />
-					<c:param name="ordererId" value="${result.ordererId}" />
-				</c:url>
+				<c:url var="actionUrl" value="/orders/update.do" />
 			</c:when>
 			<c:otherwise>
-				<c:set var="actionUrl" value="/orders/insert.do"/>
+				<c:url var="actionUrl" value="/orders/insert.do"/>
 			</c:otherwise>
 		</c:choose>
 		
-		<form action="${actionUrl}">
+		<form action="${actionUrl}" method="post" >
 			<table style="width:100%">
 			<colgroup>
 				<col style="width : 30%">
@@ -64,6 +60,7 @@
 
 				<c:choose>
 					<c:when test="${not empty searchVO.orderId}">
+						<input type="hidden" id="orderId" name="orderId" value="${searchVO.orderId}" />
 						<tr>
 							<th>주문자 번호</th>
 							<td>
@@ -109,7 +106,7 @@
 				<tr>
 					<th>요청사항</th>
 					<td>
-						<textarea name="requestTerm" rows="5" cols="30"><c:out value="${result.requestTerm}" /></textarea>
+						<textarea name="requestedTerm" rows="5" cols="30"><c:out value="${result.requestedTerm}" /></textarea>
 					</td>
 				</tr>
 				

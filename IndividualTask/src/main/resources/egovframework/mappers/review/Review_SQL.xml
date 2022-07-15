@@ -82,6 +82,7 @@
 					AND A.NOTICE_AT = 'Y'
 				</when>
 				<otherwise>
+					AND A.NOTICE_AT = 'N'
 					<if test='searchCondition != null and searchCondition != ""'>
 						<choose>
 							<when test='searchCondition == "0"'>

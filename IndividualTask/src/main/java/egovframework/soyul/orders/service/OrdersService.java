@@ -15,6 +15,8 @@ public interface OrdersService {
 	
 	public List<EgovMap> memberOrdersList(String ordererId) throws Exception;
 	
+	public List<String> memberOrdersListForReview(String ordererId) throws Exception;
+
 	public int memberOrdersCnt(String ordererId) throws Exception;
 
 	public int allOrdersCnt(String ordererId) throws Exception;

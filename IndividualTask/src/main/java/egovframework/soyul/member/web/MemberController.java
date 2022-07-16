@@ -49,6 +49,9 @@ public class MemberController {
 		//String checkId = (String) commandMap.get("checkId");
 		//checkId = new String(checkId.getBytes("ISO-8859-1"), "UTF-8");
 		System.out.println(emplyrId);
+		if(emplyrId==null || emplyrId.length()==0 || emplyrId.equals(""))
+			return "아이디를 입력해주세요.";
+		
 		int usedCnt = memberManageService.checkIdDplct(emplyrId);
 		//modelAndView.addObject("usedCnt", usedCnt);
 		//modelAndView.addObject("checkId", checkId);

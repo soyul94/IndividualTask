@@ -18,11 +18,18 @@
 <%@ include file = "/WEB-INF/jsp/yul/comm/header.jsp"%>
 
 <%-- 회원가입 폼 --%>
-<section id="section">
-		<form action="${pageContext.request.contextPath}/member/addMember.do" method="post">
-			<table style="width:100%">
+<div id="contentContainer">
+	<aside id="subMenu">
+		<div class="reviewTop">
+			<div id="reviewTitle"><a href="#">Join to be a Member</a></div>
+		</div>
+	</aside>
+	<section id="section">
+		<div id="joinFormTable" style="width:60%; margin:5% auto;">
+		<form action="${pageContext.request.contextPath}/member/addMember.do" id="joinForm" method="post" onsubmit="return regist()">
+			<table style="width:100%; font-size: 16px;">
 			<colgroup>
-				<col style="width : 30%">
+				<col style="width : 40%">
 				<col />
 			</colgroup>
 				<tr>
@@ -52,7 +59,7 @@
 					<th>비밀번호 힌트</th>
 					<td>
 						<select name="passwordHint">
-							<option value="-- 선택하세요 --">-- 선택하세요 --</option>
+							<option>-- 선택하세요 --</option>
 							<c:forEach var="hint" items="${passwordHint_result}" >
 								<option value="${hint}">${hint}</option>
 							</c:forEach>
@@ -70,8 +77,14 @@
 				<tr>
 					<th>성별</th>
 					<td>
-						<input type="radio" name="sexdstnCode" value="M"><label for="">남자</label>
-						<input type="radio" name="sexdstnCode" value="F"><label for="">여자</label>
+						<div id="sexCodeBox">
+							<div class="sexCode">
+								<input type="radio" name="sexdstnCode" value="M"><label for="">남자</label>
+							</div>
+							<div class="sexCode">
+								<input type="radio" name="sexdstnCode" value="F"><label for="">여자</label>
+							</div>
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -98,9 +111,9 @@
 			</table>
 			<input type="submit" value="가입하기">
 		</form>
-
-</section>
-
+		</div>
+	</section>
+</div>
 <%@ include file = "/WEB-INF/jsp/yul/comm/footer.jsp"%>
 
 <script type="text/javascript">
@@ -119,7 +132,14 @@
 			
 		 /*  $( "#log" ).html( msg ); */
 			//서버로부터 받은 응답이 인자로 전달된다. 즉, 위의 결과 값의 msg로 전달되는 것
-		 	alert(msg);
+		 	//alert(msg);
+		 	if(msg=='사용 가능한 아이디입니다.'){
+			 	$('#checkIdDplct').css({"color":"skyblue"});
+		 	}
+		 	else{
+		 		$('#checkIdDplct').css({"color":"coral"});
+		 	}
+		 	$('#checkIdDplct').text(msg);
 		 	console.log(msg);
 		 	console.log($('#emplyrId').val());
 		 	//$('#checkIdDplct').append(msg);
@@ -135,16 +155,109 @@
 			var a = $('#password').val();
 			var b = $('#password_check').val();
 			if(a===b){
-				$('#password_check_result').text('비밀번호가 동일합니다.')
+				$('#password_check_result').text('비밀번호가 동일합니다.').css({"color":"skyblue"});
 			}
 			else{
-				$('#password_check_result').text('비밀번호를 다시 입력해주세요.')
+				$('#password_check_result').text('비밀번호가 다릅니다.').css({"color":"coral"});
 			}
 				
 		});
 	});
 	
 	
+	
+	function regist(){
+		$("#sexCodeBox").css({"border":"1px solid #ddd"});
+		if($("#checkIdDplct").text()!="사용 가능한 아이디입니다."){
+			alert("이이디 중복확인을 해주세요.");
+			$("#emplyrId").focus();
+			return false;
+		}
+		if(!$("#emplyrId").val()){	
+			alert("이이디를 입력해주세요.");
+			$("#emplyrId").focus();
+			return false;
+		}
+		else if(!$("#userNm").val()){	
+			alert("이름을 입력해주세요.");
+			$("#userNm").focus();
+			return false;
+		}
+		else if(!$("#password").val()){	
+			alert("비밀번호를 입력해주세요.");
+			$("#password").focus();
+			return false;
+		}
+		else if(!$("#password_check").val() || ($("#password_check_result").text()=="비밀번호가 다릅니다.")){	
+			alert("비밀번호를 확인해주세요");
+			$("#password_check").focus();
+			return false;
+		}
+		else if($("[name='passwordHint']").val()=='-- 선택하세요 --'){
+			alert("비밀번호 힌트를 선택해주세요.");
+			$("[name='passwordHint']").focus();
+			return false;
+		}
+		else if(!$("#passwordCnsr").val()){	
+			alert("비밀번호 힌트의 정답을 입력해주세요");
+			$("#passwordCnsr").focus();
+			return false;
+		}
+		else if(!$("#ihidnum").val()){
+			alert("주민번등록번호를 입력해주세요.");
+			$("#ihidnum").focus();
+			return false;
+		}
+		else if($(':radio[name="sexdstnCode"]:checked').length < 1){
+		    alert('성별을 입력해주세요');                        
+		    //$("[name='sexdstnCode']").focus();
+		    $("#sexCodeBox").css({"border":"3px sold #000"});
+		    return false;
+		}
+		else if(!$("#mbtlnum").val()){
+			alert("휴대폰 번호를 입력해주세요.");
+			$("#mbtlnum").focus();
+			return false;
+		}
+		else if(!$("#emailAdres").val()){
+			alert("이메일을 입력해주세요.");
+			$("#emailAdres").focus();
+			return false;
+		}
+		else if(!$("#zip").val()){
+			alert("우편번호를 입력해주세요.");
+			$("#zip").focus();
+			return false;
+		}
+		else if(!$("#houseAdres").val()){
+			alert("주소를 입력해주세요.");
+			$("#houseAdres").focus();
+			return false;
+		}
+		else if(!$("#detailAdres").val()){
+			alert("상세주소를 입력해주세요.");
+			$("#detailAdres").focus();
+			return false;
+		}
+		else{
+			alert("회원가입을 완료했습닏. 로그인을 해주세요.");
+			return true;
+		}
+			//!$("[name='sexdstnCode']").val()||
+	}
+//	function regist(){ //제목이 입력되지 않았을 때 실패를 반환
+//		if(!$("#userNm, #password_check,[name='passwordHint'],#passwordCnsr,#ihidnum,[name='sexdstnCode'],#mbtlnum,#emailAdres,#zip,#houseAdres,#detailAdres").val()){
+//			alert("빈값이 있습니다.");
+//			return false;
+//		}	
+//	}
+/* 	function regist(){ //제목이 입력되지 않았을 때 실패를 반환
+		if(!$("#userNm, #password_check,[name='passwordHint'],#passwordCnsr,#ihidnum,[name='sexdstnCode'],#mbtlnum,#emailAdres,#zip,#houseAdres,#detailAdres").children().val()){
+			alert("빈값이 있습니다.");
+			return false;
+		}
+	
+	} */
 
 </script>
 

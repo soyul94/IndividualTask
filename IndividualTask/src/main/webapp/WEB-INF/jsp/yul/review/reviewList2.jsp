@@ -46,7 +46,12 @@ body{
 
 <%--목록 출력하기 --%>
 <div class="container">
-	<div id="contents">
+	<aside id="subMenu">
+		<div class="reviewTop">
+			<div id="reviewTitle"><a href="#">Review List</a></div>
+		</div>
+	</aside>
+	<div id="contents" style="padding-top: 0;">
 		<%--검색영역 --%>
 		<div id="bbs_search">
 			<form name="frm" method="post" action="${pageContext.request.contextPath}/review/list.do">
@@ -104,6 +109,16 @@ body{
 								</td>
 							</tr>
 						</c:forEach>
+						<c:if test="${fn:length(noticeResultList)==0}">
+							<table class="list_table">
+								<tbody>
+								<%--게시글이 없을 경우 --%>
+								<tr class="empth">
+									<td colspan="5"> 공지사항이 없습니다.</td>
+								</tr>
+								</tbody>
+							</table>
+						</c:if>
 					</table>
 					<br>
 					
@@ -120,6 +135,14 @@ body{
 			</div>
 			<%--일반글 --%>
 			<div class="reviewList">
+			<c:if test="${fn:length(resultList)==0}">
+				<%--게시글이 없을 경우 --%>
+				<div class="reviewEmpty">
+					<br><br>
+					아직 등록된 리뷰가 없습니다. <br>
+					첫 리뷰를 작성해주세요.
+				</div>
+			</c:if>
 			<c:forEach var="result" items="${resultList}" varStatus="status">
 					<div class="reviewBody">
 		                <div class="reviewSum">
@@ -175,20 +198,7 @@ body{
            			</div>
 			</c:forEach>
 			</div>
-
 			
-			
-			
-			<c:if test="${fn:length(resultList)==0}">
-				<table class="list_table">
-					<tbody>
-					<%--게시글이 없을 경우 --%>
-					<tr class="empth">
-						<td colspan="5">검색 데이터가 없습니다.</td>
-					</tr>
-					</tbody>
-				</table>
-			</c:if>
 			
 			</div>
 			<div id="paging">

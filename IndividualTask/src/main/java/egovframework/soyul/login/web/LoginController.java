@@ -38,7 +38,25 @@ public class LoginController {
 	@RequestMapping(value="/loginForm.do")
 	public String actionLogin(HttpServletRequest request, ModelMap model) throws Exception{
 		
+		String sessionAddress = (String)request.getSession().getAttribute("address");
 		String address = request.getHeader("Referer");
+		
+		if(address.equals("http://localhost:5159/soyul/member/joinForm.do")) {
+			address="/main.do";
+		}
+		if(!address.equals("http://localhost:5159/soyul/login/loginForm.do") 
+			&& !address.equals("http://localhost:5159/soyul/login/actionLogout.do")
+			&& !address.equals("http://localhost:5159/soyul/login/actionLogin.do")) {
+			
+			if(sessionAddress==null || sessionAddress.equals(""))
+				address="/main.do";
+				
+			request.getSession().setAttribute("address", address);
+		}
+		
+		
+
+		
 		model.addAttribute("address",address);
 		
 		return "/yul/comm/loginForm";
@@ -46,16 +64,16 @@ public class LoginController {
 	
 	
 	@RequestMapping(value="/actionLogin.do")
-	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, String address, HttpServletRequest request, ModelMap model) throws Exception{
+	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model) throws Exception{
 		
 		LoginVO resultVO = loginService.actionLogin(loginVO); //로그인한 사람이 상세정보 조회
 		
 		//조회한 resultVO가 null이거나 resultVO의 ID가 null이거나 ""이 모두 아닐 경우 resultVO의 정보를 session에 저장
 		if(resultVO!=null && resultVO.getId()!=null && !resultVO.getId().equals("")) {
 			request.getSession().setAttribute("LoginVO", resultVO);
-//			return "forward:"+request.getHeader("Referer");
+			String address = (String)request.getSession().getAttribute("address");
+			System.out.println("address"+address);
 			return "redirect:"+address;
-//			return "forward:/main.do";
 		}
 		else {
 			model.addAttribute("loginMessage",egovMessageSource.getMessage("fail.common.login"));

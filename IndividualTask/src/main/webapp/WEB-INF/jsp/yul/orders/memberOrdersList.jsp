@@ -13,11 +13,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <title>My Orders List</title>
 
-<link href="${pageContext.request.contextPath}/yul/css/sub.css" rel="stylesheet"/>
+<%-- <link href="${pageContext.request.contextPath}/yul/css/reset.css" rel="stylesheet"/> --%>
 <!-- BBS Style -->
 <link href="${pageContext.request.contextPath}/asset/BBSTMP_0000000000001/style.css" rel="stylesheet" />
 <!-- 공통 Style -->
 <link href="${pageContext.request.contextPath}/asset/LYTTMP_0000000000000/style.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/yul/css/sub.css" rel="stylesheet"/>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 </head>
@@ -27,12 +28,16 @@
 
 <div id="contentContainer">
 	<aside id="subMenu">
-		<ul>
+	<div class="orderMenu">
+		<div id="orderListA" style="text-decoration: underline;"><a href="<c:url value='/orders/list.do' />">My Order List</a></div>
+		<div id="orderFormA"><a href="<c:url value='/orders/form.do' />">Make Order Form</a></div>
+		<%-- <ul>
 			<li><a href="<c:url value='/orders/list.do' />">My Order List</a></li>
 			<li><a href="<c:url value='/orders/form.do' />">Make Order Form</a></li>
-		</ul>
+		</ul> --%>
+	</div>
 	</aside>
-	<section>
+	<section di="mberOrderList">
 		<div class="total">
 			총 게시물 <strong><c:out value="${paginationInfo.totalRecordCount}" /></strong>건 | 
 			현재 페이지 <strong><c:out value="${paginationInfo.currentPageNo}" /></strong> /
@@ -51,14 +56,22 @@
 						<th>관리자 승인</th> <td><c:out value="${vo.orderApproval}" /></td>
 						<th>상태</th>	 <td><c:out value="${vo.orderState}" /></td>	
 						<th>금액</th>	 <td><c:out value="${vo.orderAmount}" /></td>
-						<th>리뷰<th> <td><c:out value="${vo.reviewCheak}" /></td>
+						<th>리뷰</th> <td><c:out value="${vo.reviewCheak}" /></td>
 						<th>
 							<c:url var="updateUrl" value='/orders/form.do' >
 								<c:param name="orderId" value="${vo.orderId}" />
 								<c:param name="ordererId" value="${vo.ordererId}" />
 							</c:url>
 							<a href="${updateUrl}">주문수정</a>
+						</th>
 						<th>
+							<c:url var="deleteUrl" value='/orders/delete.do' >
+								<c:param name="orderId" value="${vo.orderId}" />
+								<c:param name="ordererId" value="${vo.ordererId}" />
+							</c:url>
+							<a href="${updateUrl}">주문취소</a>
+						</th>
+						<th>상세보기</th>
 					</tr>
 				</table>
 			</div>

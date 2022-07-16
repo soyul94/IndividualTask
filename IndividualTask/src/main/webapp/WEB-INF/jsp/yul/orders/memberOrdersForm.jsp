@@ -13,6 +13,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <title>My Orders Form</title>
 
+
 <link href="${pageContext.request.contextPath}/yul/css/sub.css" rel="stylesheet"/>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -23,10 +24,14 @@
 
 <div id="contentContainer">
 	<aside id="subMenu">
-		<ul>
-			<li><a href="<c:url value='/orders/list.do' />">My Order List</a></li>
-			<li><a href="<c:url value='/orders/form.do' />">Make Order Form</a></li>
-		</ul>
+		<div class="orderMenu">
+			<div id="orderListA" ><a href="<c:url value='/orders/list.do' />">My Order List</a></div>
+			<div id="orderFormA" style="text-decoration: underline;"><a href="<c:url value='/orders/form.do' />">Make Order Form</a></div>
+			<%-- <ul>
+				<li><a href="<c:url value='/orders/list.do' />">My Order List</a></li>
+				<li><a href="<c:url value='/orders/form.do' />">Make Order Form</a></li>
+			</ul> --%>
+		</div>
 	</aside>
 	<section>
 		<c:choose> <%-- 아래의 폼에 담긴 정보가 이동할 주소를 결정 --%>
@@ -37,11 +42,11 @@
 				<c:url var="actionUrl" value="/orders/insert.do"/>
 			</c:otherwise>
 		</c:choose>
-		
-		<form action="${actionUrl}" method="post" >
-			<table style="width:100%">
+		<div id="orderFormTable" style="width:60%; margin:5% auto;">
+		<form id="orderFormSubmint" action="${actionUrl}" method="post" >
+			<table style="width:100%; font-size: 16px;">
 			<colgroup>
-				<col style="width : 30%">
+				<col style="width : 40%">
 				<col />
 			</colgroup>
 			
@@ -113,28 +118,28 @@
 				<tr>
 					<th>주문 제품</th>
 					<td>
-						<table>
+						<table style="width:80%; font-size: 14px;">
 							<tr>
-								<th>베이스 :</th>
+								<th style="width: 20%;">베이스 :</th>
 								<td>
 									<select name="orderProductFirst">
-										<option value="-- 베이스 --">-- 선택하세요 --</option>
-										<option value="베이스 워터 1">베이스 워터 1</option>
-										<option value="베이스 워터 2">베이스 워터 2</option>
-										<option value="베이스 워터 3">베이스 워터 3</option>
-										<option value="베이스 워터 4">베이스 워터 4</option>
-										<option value="베이스 워터 5">베이스 워터 5</option>
+										<option> -- 선택하세요 -- </option>
+										<option value="베이스 워터 1" <c:if test="${result.orderProductFirst eq '베이스 워터 1'}">selected="selected"</c:if>> 베이스 워터 1 </option>
+										<option value="베이스 워터 2" <c:if test="${result.orderProductFirst eq '베이스 워터 2'}">selected="selected"</c:if>> 베이스 워터 2 </option>
+										<option value="베이스 워터 3" <c:if test="${result.orderProductFirst eq '베이스 워터 3'}">selected="selected"</c:if>> 베이스 워터 3 </option>
+										<option value="베이스 워터 4" <c:if test="${result.orderProductFirst eq '베이스 워터 4'}">selected="selected"</c:if>> 베이스 워터 4 </option>
+										<option value="베이스 워터 5" <c:if test="${result.orderProductFirst eq '베이스 워터 5'}">selected="selected"</c:if>> 베이스 워터 5 </option>
 									</select>
 								</td>
-								<th>기능 :</th>
+								<th  style="width: 20%;">기능 :</th>
 								<td>
 									<select name="orderProductLast">
-										<option value="-- 기능성 --">-- 선택하세요 --</option>
-										<option value="기능성 성분 1">기능성 성분 1</option>
-										<option value="기능성 성분 2">기능성 성분 2</option>
-										<option value="기능성 성분 3">기능성 성분 3</option>
-										<option value="기능성 성분 4">기능성 성분 4</option>
-										<option value="기능성 성분 5">기능성 성분 5</option>
+										<option> -- 선택하세요 -- </option>
+										<option value="기능성 성분 1" <c:if test="${result.orderProductLast eq '기능성 성분 1'}">selected="selected"</c:if>>기능성 성분 1</option>
+										<option value="기능성 성분 2" <c:if test="${result.orderProductLast eq '기능성 성분 2'}">selected="selected"</c:if>>기능성 성분 2</option>
+										<option value="기능성 성분 3" <c:if test="${result.orderProductLast eq '기능성 성분 3'}">selected="selected"</c:if>>기능성 성분 3</option>
+										<option value="기능성 성분 4" <c:if test="${result.orderProductLast eq '기능성 성분 4'}">selected="selected"</c:if>>기능성 성분 4</option>
+										<option value="기능성 성분 5" <c:if test="${result.orderProductLast eq '기능성 성분 5'}">selected="selected"</c:if>>기능성 성분 5</option>
 									</select>
 								</td>
 							</tr>
@@ -142,23 +147,23 @@
 								<th>보습 :</th>
 								<td>
 									<select name="orderProductMiddle">
-										<option value="-- 보습 --">-- 선택하세요 --</option>
-										<option value="보습제 1">보습제 1</option>
-										<option value="보습제 2">보습제 2</option>
-										<option value="보습제 3">보습제 3</option>
-										<option value="보습제 4">보습제 4</option>
-										<option value="보습제 5">보습제 5</option>
+										<option> -- 선택하세요 -- </option>
+										<option value="보습제 1" <c:if test="${result.orderProductMiddle eq '보습제 1'}">selected="selected"</c:if>>보습제 1</option>
+										<option value="보습제 2" <c:if test="${result.orderProductMiddle eq '보습제 2'}">selected="selected"</c:if>>보습제 2</option>
+										<option value="보습제 3" <c:if test="${result.orderProductMiddle eq '보습제 3'}">selected="selected"</c:if>>보습제 3</option>
+										<option value="보습제 4" <c:if test="${result.orderProductMiddle eq '보습제 4'}">selected="selected"</c:if>>보습제 4</option>
+										<option value="보습제 5" <c:if test="${result.orderProductMiddle eq '보습제 5'}">selected="selected"</c:if>>보습제 5</option>
 									</select>
 								</td>
 								<th>패키지 :</th>
 								<td>
 									<select name="orderProducPackage">
-										<option value="-- 패키지 --">-- 선택하세요 --</option>
-										<option value="패키지 1">패키지 1</option>
-										<option value="패키지 2">패키지 2</option>
-										<option value="패키지 3">패키지 3</option>
-										<option value="패키지 4">패키지 4</option>
-										<option value="패키지 5">패키지 5</option>
+										<option> -- 선택하세요 -- </option>
+										<option value="패키지 1" <c:if test="${result.orderProducPackage eq '패키지 1'}">selected="selected"</c:if>>패키지 1</option>
+										<option value="패키지 2" <c:if test="${result.orderProducPackage eq '패키지 1'}">selected="selected"</c:if>>패키지 2</option>
+										<option value="패키지 3" <c:if test="${result.orderProducPackage eq '패키지 1'}">selected="selected"</c:if>>패키지 3</option>
+										<option value="패키지 4" <c:if test="${result.orderProducPackage eq '패키지 1'}">selected="selected"</c:if>>패키지 4</option>
+										<option value="패키지 5" <c:if test="${result.orderProducPackage eq '패키지 1'}">selected="selected"</c:if>>패키지 5</option>
 									</select>
 								</td>
 							</tr>
@@ -176,6 +181,7 @@
 			<input type="submit" value="주문하기">
 			
 		</form>
+		</div>
 	</section>
 </div>
 

@@ -135,18 +135,23 @@ $(function(){
 							<input type="text" id="reviewSj" name="reviewSj" title="제목입력" class="q3" value="<c:out value="${result.reviewSj}"/>" />
 						</td> 
 					</tr>
-					<c:if test="${sessionScope.LoginVO.id eq 'admin'}">
-					<tr><%-- scope: 읽기 형식 ???? 웹접근성에 관련된거 같은데 무슨말인지 모르겠다 --%>
-						<th scope="row">공지여부</th>
-						<td>
-							<label for="noticeAtY">예 : </label>		<%-- radio와 checkbox에 옵션으로  checked가 있으며 이 옵션이 "checked"로 되어있다면 이미 체크가 되어있음 --%>
-							<input type="radio" id="noticeAtY" value="Y" name="noticeAt" <c:if test="${result.noticeAt eq 'Y'}">checked="checked"</c:if>/>
-							&nbsp;&nbsp;&nbsp;	<%-- checkbox는 다수 선택가능. radio는 하나만 선택가능 그래서 ckeckbox에 다수의 checked가 되어 있으면 적용이 되는데 radio는 마지막 checked만 적용된다.--%>
-							<label for="noticeAtN">아니오 : </label>
-							<input type="radio" id="noticeAtN" value="N" name="noticeAt" <c:if test="${result.noticeAt ne 'Y'}">checked="checked"</c:if>/>
-						</td>			<%-- result.noticeAt eq 'N'가 아니라 result.noticeAt ne 'Y'인 이유 : null값이 들어올 경우에는 디폴트가 N으로 동작하도록 하기 위해 --%>
-					</tr>
-					</c:if>
+					<c:choose>
+						<c:when test="${sessionScope.LoginVO.id eq 'admin'}">
+							<tr><%-- scope: 읽기 형식 ???? 웹접근성에 관련된거 같은데 무슨말인지 모르겠다 --%>
+								<th scope="row">공지여부</th>
+								<td>
+									<label for="noticeAtY">예 : </label>		<%-- radio와 checkbox에 옵션으로  checked가 있으며 이 옵션이 "checked"로 되어있다면 이미 체크가 되어있음 --%>
+									<input type="radio" id="noticeAtY" value="Y" name="noticeAt" <c:if test="${result.noticeAt eq 'Y'}">checked="checked"</c:if>/>
+									&nbsp;&nbsp;&nbsp;	<%-- checkbox는 다수 선택가능. radio는 하나만 선택가능 그래서 ckeckbox에 다수의 checked가 되어 있으면 적용이 되는데 radio는 마지막 checked만 적용된다.--%>
+									<label for="noticeAtN">아니오 : </label>
+									<input type="radio" id="noticeAtN" value="N" name="noticeAt" <c:if test="${result.noticeAt ne 'Y'}">checked="checked"</c:if>/>
+								</td>			<%-- result.noticeAt eq 'N'가 아니라 result.noticeAt ne 'Y'인 이유 : null값이 들어올 경우에는 디폴트가 N으로 동작하도록 하기 위해 --%>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<input type="hidden" name="noticeAt" value="N" />
+						</c:otherwise>
+					</c:choose>
 					<tr>
 						<th scope="row">비공개여부</th>
 						<td>
@@ -224,12 +229,12 @@ $(function(){
 						</c:url>
 						<a href="${uptUrl}" id="btn-reg" class="btn">수정</a>
 						
-						<c:url var="delUrl" value="/review/delete.do" >
+						<%-- <c:url var="delUrl" value="/review/delete.do" >
 							<c:param name="reviewId" value="${result.reviewId}" />
 						</c:url>
 						<a href="${delUrl}" id="btn-del" class="btn">
 							<i class="ico-del"></i>삭제
-						</a>
+						</a> --%>
 					</c:when>
 					<c:otherwise>
 						<a href="#none" id="btn-reg" class="btn spot">등록</a>

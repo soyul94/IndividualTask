@@ -63,9 +63,9 @@
 }
 
 #header nav #loginBar {
-	width: 30%;
+	width: 55%;
 	height: 40%;
-	margin-left: 70%;
+	margin-left: 45%;
 	font-size: 14px;
 	box-sizing: border-box;
 	padding-top: 1%;
@@ -130,7 +130,7 @@
 /*콘텐츠의 가장 외곽*/
 #contentContainer{
 	max-width: 1200px;
-	height:100%;
+	min-height: 800px;
 	margin: 0 auto;
 }
 
@@ -139,21 +139,38 @@
 #orderFormSubmint input[type=text], #orderFormSubmint textarea{
 	width:80%;
 	resize: none;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
 }
 
 #orderFormSubmint input[type=submit]{
 	margin-top : 10%;
 	margin-left: 37%;
 	width:30%;
-	font-size: 16px;
+	font-size: 18px;
 	padding: 3px;
 	resize: none;
+	height: 36px;
+	border: none;
+	padding: 3px;
+	background: #aaa;
+	color : white;
+	cursor: pointer;
+}
+#orderFormSubmint select{
+	width:100%;
+	height: 36px;
+	font-size: 16px;
+    vertical-align: middle;
+    padding: 0 15px;
+    text-align: center;
 }
 
 /*회원주문리스트*/
 #contentContainer #subMenu {
 	width:100%;
 	height:10%;
+	max-height:50px;
 	text-align: center;
 }
 #contentContainer #subMenu .orderMenu{
@@ -164,7 +181,8 @@
 #contentContainer #subMenu .orderMenu #orderListA, #contentContainer #subMenu .orderMenu #orderFormA{
 	font-size: 22px;
 	font-weight: bold;
-	padding-top: 7%;
+	padding:7% 0;
+	/* padding-top: 7%; */
     /* text-decoration: underline; */
 }
 #contentContainer #subMenu .orderMenu #orderListA{
@@ -182,14 +200,25 @@
 	text-align: center;
 	display: table-cell;
 }
+#contentContainer #mberOrderList .orderList .orderState{
+	border-bottom: 1px solid #aaa;
+}
+#contentContainer #mberOrderList .orderList .orderEmpty{
+	width: 47%;
+	height: 200px;
+	margin: 1% auto;
+	font-size: 16px;
+	text-align: center;
+}
+
 
 /* 회원가입 폼 */
-#contentContainer  #subMenu {
+/* #contentContainer #subMenu {
 	width:100%;
 	height:10%;
 	text-align: center;
-}
-#contentContainer  #subMenu .reviewTop{
+} */
+#contentContainer #subMenu .reviewTop{
 	width: 40%;
 	height: 100%;
 	margin: 0 auto;
@@ -231,7 +260,7 @@
 	width:30%;
 	height: 36px;
 	border: none;
-	font-size: 16px;
+	font-size: 18px;
 	padding: 3px;
 	background: #aaa;
 	color : white;
@@ -253,7 +282,7 @@
 /* 리뷰 리스트 reviewList2.jsp*/
 .container {
 	max-width: 1200px;
-	height: 100%;
+	min-height: 100%;
 	/* background-color: aqualightblue; */
 }
 .container  #subMenu {
@@ -269,7 +298,8 @@
 .container  #subMenu .reviewTop #reviewTitle{
 	font-size: 22px;
 	font-weight: bold;
-	padding-top: 7%;
+	padding: 7% 0;
+	/* padding-top: 7%; */
     text-decoration: underline;
 }
 
@@ -335,6 +365,87 @@
 	vertical-align:middle; 
 	font-size:14px;
 	display: inline-block;
+}
+
+
+/* reviewSelect.jsp 리뷰디테일 */
+
+#replyInputBox{
+	width:80%; 
+	height:36px;
+	margin:3% auto;
+}
+
+#replyInputBox #replyInputTable{
+	width: 100%;
+}
+#replyInputBox #replyInputTable th, #replyInputBox #replyInputTable td{
+	height: 36px;
+}
+#replyInputBox #replyInputTable th{
+	width: 87%;
+}
+#replyInputBox #replyInputTable td{
+	width: 13%;
+}
+#replyInputBox #replyInputTable #replyContent{
+	width:100%; 
+	height:36px; 
+	box-sizing:border-box; 
+	font-size:16px;
+	resize: none;
+}
+#replyInputBox #replyInputTable #saveBtn{
+	width:100%; 
+	height:36px; 
+	border:none; 
+	background-color:#aaa; 
+	color:white; 
+	font-size:16px;
+}
+
+#contents .comment-list{
+	margin-bottom:10%;
+}
+
+.comment-list #replyList{
+	font-size:14px;
+	box-sizing: border-box;
+	border-collapse: collapse;
+	border : 1px solid #aaa;
+}
+.comment-list #replyList th, .comment-list #replyList td{
+	min-height: 32px;
+	padding: 0.5% 1%;
+	border : 1px solid #aaa;
+	
+}
+
+.comment-list #replyList .commentRegisterId {
+	width : 15%;
+	text-align: center;
+}
+.comment-list #replyList .commentContent {
+	width : 60%;
+	text-align: left;
+}
+.comment-list #replyList .commentRegisterDate {
+	width : 15%;
+	text-align: center;
+}
+.comment-list #replyList .commentController {
+	width: 10%;
+	text-align: center;
+}
+.comment-list #replyList .commentController .replyEditBtn, .comment-list #replyList .commentController .replyDeleteBtn{
+	width: 40%;
+    height: 30px;
+	margin: 1%;
+	box-sizing: border-box;
+	font-sise:14px;
+    display: inline-block;
+    background-color: #ddd;
+    color:#555;
 }
 
 

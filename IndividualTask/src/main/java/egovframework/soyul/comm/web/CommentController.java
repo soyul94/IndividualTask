@@ -29,10 +29,23 @@ public class CommentController {
 	private CommentService commentService;
 	
 	
+	@RequestMapping(value="/list.do")
+	public String commentList(CommentVO commentVO, Model model) throws Exception {
+		System.out.println("/comment/list.do 실행 !! ");
+		
+		List<EgovMap> list = commentService.selectCommentList(commentVO);
+		int cnt = commentService.selectCommentListCnt(commentVO);
+		
+		model.addAttribute("commentList",list);
+		model.addAttribute("commentListCnt",cnt);
+		
+		return "yul/comm/commentList";
+	}
+	
 	@RequestMapping(value ="/insert.do" , produces="application/text; charset=UTF-8")
 	@ResponseBody
 	public String commentInsertAjax(@ModelAttribute("searchVO")CommentVO commentVO, Model model) throws Exception {
-		
+		System.out.println("/comment/insert.do 실행 !! ");
 		
 		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		
@@ -42,27 +55,29 @@ public class CommentController {
 		else{
 			commentVO.setCommentRegisterId(user.getId());
 			int num = commentService.insertComment(commentVO);
-			return num + "개 댓글 입력 성공";
+			return num + "개 댓글 입력 완료";
 		}
 	}
 	
-	
-	@RequestMapping(value="/list.do")
-	public String commentList(CommentVO commentVO, Model model) throws Exception {
+	@RequestMapping(value ="/delete.do" , produces="application/text; charset=UTF-8")
+	@ResponseBody
+	public String commentDeletetAjax(@ModelAttribute("searchVO")CommentVO commentVO, Model model) throws Exception {
+		System.out.println("/comment/delete.do 실행 !! ");
 		
-		System.out.println(commentVO.getBoardId());
+		LoginVO user = (LoginVO) EgovUserDetailsHelper.getAuthenticatedUser();
 		
-		List<EgovMap> list = commentService.selectCommentList(commentVO);
-		int cnt = commentService.selectCommentListCnt(commentVO);
-		
-		for(EgovMap e : list)
-			System.out.println(e);
-		
-		model.addAttribute("commentList",list);
-		model.addAttribute("commentListCnt",cnt);
-		
-		return "yul/comm/commentList";
+		if (user == null || user.getId() == null) {
+			return "로그인 후 사용 가능합니다."; // 로그인이 되어있지 않으면 리스트로 돌려보냄
+		}
+		else{
+			commentVO.setCommentRegisterId(user.getId());
+			int num = commentService.deleteComment(commentVO);
+			
+			System.out.println(commentVO);
+			return num + "개 댓글 삭제 완료";
+		}
 	}
+	
 	
 
 }

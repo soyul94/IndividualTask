@@ -23,4 +23,6 @@ public interface OrdersMapper {
 	int allOrdersCnt(String ordererId) throws Exception;
 
 	int memberOrdersUpdate(OrdersVO ordersVO) throws Exception;
+
+	int deleteOrders(OrdersVO ordersVO) throws Exception;
 }

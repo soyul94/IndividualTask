@@ -37,7 +37,7 @@
 		</ul> --%>
 	</div>
 	</aside>
-	<section di="mberOrderList">
+	<section id="mberOrderList">
 		<div class="total">
 			총 게시물 <strong><c:out value="${paginationInfo.totalRecordCount}" /></strong>건 | 
 			현재 페이지 <strong><c:out value="${paginationInfo.currentPageNo}" /></strong> /
@@ -62,21 +62,21 @@
 								<c:param name="orderId" value="${vo.orderId}" />
 								<c:param name="ordererId" value="${vo.ordererId}" />
 							</c:url>
-							<a href="${updateUrl}">주문수정</a>
+							<a id="btn-del" href="${updateUrl}">주문수정</a>
 						</th>
 						<th>
 							<c:url var="deleteUrl" value='/orders/delete.do' >
 								<c:param name="orderId" value="${vo.orderId}" />
 								<c:param name="ordererId" value="${vo.ordererId}" />
 							</c:url>
-							<a href="${updateUrl}">주문취소</a>
+							<a id="orderDeleteBtn" href="${deleteUrl}">주문취소</a>
 						</th>
-						<th>상세보기</th>
+						<th class="toggle-btn"><a href="#none">상세보기</a></th>
 					</tr>
 				</table>
 			</div>
-			<div class="orderDetail">
-				<p>주문 제품</p>
+			<div class="orderDetail" style="display: none;">
+				<p style="font-size:14px;">&nbsp;&nbsp; 주문 제품</p>
 				<table>
 					<tr>
 						<th>베이스워터</th>
@@ -95,7 +95,7 @@
 						<td><c:out value="${vo.requestedTerm}" /></td>
 					</tr>
 				</table>
-				<p>배송지 정보</p>
+				<p style="font-size:14px;">&nbsp;&nbsp; 배송지 정보</p>
 				<table>
 					<tr>
 						<th>배송자 이름</th>
@@ -115,9 +115,11 @@
 		</c:forEach>
 		<%--게시글이 없을 경우 --%>
 		<c:if test="${fn:length(ordersList)==0}">
-			<tr class="empth">
-				<td colspan="5">검색 데이터가 없습니다.</td>
-			</tr>
+			<div class="orderEmpty">
+					<br><br>
+					아직 주문한 내역이 없습니다. <br>
+					첫 주문서를 작성해주세요.
+			</div>
 		</c:if>
 		</div>
 		
@@ -127,11 +129,30 @@
 			<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="${pagingParam}"/>
 		</div>
 	</section>
+	
 </div>
+
+
+<%-- footer --%>
+<%@ include file = "/WEB-INF/jsp/yul/comm/footer.jsp"%>
 <script>
 	<c:if test="${not empty message}">
 		alert("${message}");
 	</c:if>
+	
+	$(document).ready(function(){
+		//게시글 삭제
+		$("#orderDeleteBtn").click(function(){
+			if(!confirm("삭제하시겠습니까 ? ")){
+				return false;
+			}
+		});
+	});
+	
+	$(".orderState").on('click','.toggle-btn', function(){
+		$(this).parents(".orderState").next(".orderDetail").stop().slideToggle("fast");
+	});
+	
 </script>
 </body>
 </html>

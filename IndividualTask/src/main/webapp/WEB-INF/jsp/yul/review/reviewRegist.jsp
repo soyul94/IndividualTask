@@ -120,7 +120,7 @@ $(function(){
 	<div id="contents">			<%-- onsubmit : 스크립트 함수를 실행하여 해당 함수의 결과 값이 true이면 form을 submit함 유효성 검사할 때 주로 사용된다. --%>
 		<form action="${actionUrl}" method="post" id="frm" name="frm" onsubmit="return regist()" enctype="multipart/form-data">
 			<input type="hidden" name="reviewId" value="${result.reviewId}"/>
-			<input type="hidden" name="returnUrl" value="/review/reviewRegist.do"/> <%--첨부파일 목록 수정 후 돌아올 주소 --%>
+			<input type="hidden" name="returnUrl" value="${pageContext.request.contextPath}/review/regist.do"/> <%--첨부파일 목록 수정 후 돌아올 주소 --%>
 			
 			<table class="chart2">
 				<caption>게시글 작성</caption> <%-- caption : 표의 정보(설명글) : 장애인들을 위해 사용되며 상세하게 기록되어야한다. --%>
@@ -165,8 +165,8 @@ $(function(){
 					<tr>
 						<th scope="row">피부타입</th>
 						<td>
-							<select name="skinType">
-								<option value="-- 선택하세요 --"> -- 선택하세요 -- </option>
+							<select name="skinType" style="width: 75%; text-align: center; font-size:15px;">
+								<option> -- 선택하세요 -- </option>
 								<option value="중성" <c:if test="${result.skinType eq '중성'}">selected="selected"</c:if>>중성</option>
 								<option value="건성" <c:if test="${result.skinType eq '건성'}">selected="selected"</c:if>>건성</option>
 								<option value="지성" <c:if test="${result.skinType eq '지성'}">selected="selected"</c:if>>지성</option>
@@ -175,18 +175,17 @@ $(function(){
 							</select>
 						</td>
 					</tr>
+					<tr>
 						<th scope="row">리뷰할 제품</th>
 						<td>
-							<select name="reviewProduct">
-								<option value="-- 선택하세요 --"> -- 선택하세요 -- </option>
+							<select name="reviewProduct"  style="width: 75%; text-align: center; font-size:15px;">
+								<option> -- 선택하세요 -- </option>
 								<c:forEach items="${orderList}" var="order">
 									<option value="${order}" <c:if test="${result.reviewProduct eq order}">selected="selected"</c:if>>${order}</option>
 								</c:forEach>
-								<%-- <option value="주문 1" <c:if test="${result.reviewProduct eq '주문 1'}">selected="selected"</c:if>>${USER_INFO.id}의 주문 1</option>
-								<option value="주문 2" <c:if test="${result.reviewProduct eq '주문 2'}">selected="selected"</c:if>>${USER_INFO.id}의 주문 2</option>
-								<option value="주문 3" <c:if test="${result.reviewProduct eq '주문 3'}">selected="selected"</c:if>>${USER_INFO.id}의 주문 3</option> --%>
 							</select>
 						</td>
+					</tr>
 					<tr>
 						<th scope="row">작성자ID</th>
 						<td>
@@ -203,7 +202,7 @@ $(function(){
 						<tr>
 							<th scope="row">기존<br>첨부파일목록</th>
 							<td>
-								<c:import url="${pageContext.request.contextPath}/cmm/fms/selectFileInfsForUpdate.do" charEncoding="utf-8">
+								<c:import url="/cmm/fms/selectFileInfsForUpdate.do" charEncoding="utf-8">
 									<c:param name="param_atchFileId" value="${result.atchFileId}"/>
 								</c:import>
 							</td>

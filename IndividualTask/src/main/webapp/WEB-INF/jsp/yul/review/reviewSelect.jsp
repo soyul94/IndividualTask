@@ -40,9 +40,14 @@
 </c:url>
 
 <div class="container">
-	<div id="contents">
+	<aside id="subMenu">
+		<div class="reviewTop">
+			<div id="reviewTitle"><a href="#">Review Detail</a></div>
+		</div>
+	</aside>
+	<div id="contents" style="padding-top: 0;">
 		<div id="bbs_wrap">
-			<div class="board_view">
+			<div class="board_view" style="font-size:14px;">
 				<dl class="tit_view">
 					<dt>제목</dt>
 					<dd><c:out value="${result.reviewSj}"/></dd>
@@ -71,7 +76,7 @@
 						</c:import>
 					</dd>
 				</dl>
-				<div class="view_cont">
+				<div class="view_cont" style="min-height: 200px;">
 					<c:out value="${result.reviewCn}" escapeXml="fales" />
 				</div>
 			</div>
@@ -97,25 +102,36 @@
 					<a href="${listUrl}" class="btn">목록</a>
 			</div>
 		</div>
+		
+		
+		<%-- 댓글작성 --%>
+		<form action="${pageContext.request.contextPath}/comment/insert.do" method="post">
+			<input type="hidden" name="boardId" value="${result.reviewId}" />
+			<div id="replyInputBox">
+				<table id="replyInputTable">
+					<tr>
+						<th>
+							<textarea id="replyContent" name="commentContent"></textarea>
+						</th>
+						<td>
+							<input type="button" value="저장" id="saveBtn"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</form>
+		
+		<div class="comment-list">
+			<c:import url="/comment/list.do" charEncoding="utf-8">
+				<c:param name="boardId" value="${result.reviewId}"/>
+			</c:import>
+		</div>
 	</div>
+	
+	
+	
+	
 </div>
-
-
-
-<%-- 댓글작성 --%>
-<form action="${pageContext.request.contextPath}/comment/insert.do" method="post">
-		<input type="hidden" name="boardId" value="${result.reviewId}" />
-		<textarea name="commentContent" rows="5" cols="50"></textarea>
-		<input type="button" value="저장" id="saveBtn"/>
-</form>
-
-<div class="comment-list">
-	<c:import url="/comment/list.do" charEncoding="utf-8">
-		<c:param name="boardId" value="${result.reviewId}"/>
-	</c:import>
-</div>
-
-
 
 <%-- footer --%>
 <%@ include file = "/WEB-INF/jsp/yul/comm/footer.jsp"%>
@@ -130,39 +146,69 @@
 		});
 	});
 	
+	function readComment(){
+		$.ajax({
+			url : "${pageContext.request.contextPath}/comment/list.do",
+			type : "post",
+			data : {boardId :"${result.reviewId}"},
+			dataType : "html",
+			success : function(data){
+				$(".comment-list").html(data);
+			},error : function(){
+				alert(11111);
+				//alert("error : list")
+			}
+		});
+	}
+	
 	
 	$('#saveBtn').on('click', function(){ //saveBtn을 클릭하면 함수 실행
-		var content = $('[name="commentContent"]').val();
-		if(content==""){
-			alert("내용을 입력해주세요");
+		if("${sessionScope.LoginVO.id}"==""){
+			alert("로그인 후 댓글을 작성할 수 있습니다.");
 		}
 		else{
-			$.ajax({
-			  url: "${pageContext.request.contextPath}/comment/insert.do",	//요청주소
+			var content = $('[name="commentContent"]').val();
+			if(content==""){
+				alert("내용을 입력해주세요");
+			}
+			else{
+				$.ajax({
+				  url: "${pageContext.request.contextPath}/comment/insert.do",	//요청주소
+				  method: "POST",											//요청방식
+				  data: { boardId :$('[name="boardId"]').val(), 
+					  	  commentContent : $('[name="commentContent"]').val()
+					  },	//파라미터
+				  dataType: "text"											//요청의 결과(서버의 응답)으로 받을 데이터의 형식
+				}).done(function( msg ) {
+				 	alert(msg);
+				 	readComment();
+				 	
+				}).fail(function( jqXHR, textStatus ) {
+				  alert( "Request failed: " + textStatus );
+				});	
+			}
+		}
+	});
+	
+	
+	//댓글 삭제 함수
+	$('.comment-list').on('click',".replyDeleteBtn", function(){ //saveBtn을 클릭하면 함수 실행
+
+		$.ajax({
+			  url: "${pageContext.request.contextPath}/comment/delete.do",	//요청주소
 			  method: "POST",											//요청방식
-			  data: { boardId :$('[name="boardId"]').val(), 
-				  	  commentContent : $('[name="commentContent"]').val()
+			  data: { boardId : $('[name="boardId"]').val(), 
+				  	  commentId : $(this).attr("data-commentId")
 				  },	//파라미터
 			  dataType: "text"											//요청의 결과(서버의 응답)으로 받을 데이터의 형식
 			}).done(function( msg ) {
 			 	alert(msg);
-			 	
-			 	$.ajax({
-					url : "${pageContext.request.contextPath}/comment/list.do",
-					type : "post",
-					data : {boardId :"${result.reviewId}"},
-					dataType : "html",
-					success : function(data){
-						$(".comment-list").html(data);
-					},error : function(){
-						alert(11111);
-						//alert("error : list")
-					}
-				});
+			 	readComment();
+			 	console.log($(this).attr("data-commentId"));
+
 			}).fail(function( jqXHR, textStatus ) {
 			  alert( "Request failed: " + textStatus );
 			});	
-		}
 	});
 	
 	

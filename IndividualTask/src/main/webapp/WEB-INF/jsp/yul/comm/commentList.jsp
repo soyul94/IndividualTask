@@ -5,19 +5,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<table>
+<table id="replyList">
 <tr>
-	<th>작성자</th>
-	<th>댓글</th>
-	<th>등록일</th>
-	<th>삭제</th>
+	<th class="commentRegisterId">작성자</th>
+	<th class="commentContent" style="text-align: center;">댓글</th>
+	<th class="commentRegisterDate">등록일</th>
+	<th class="commentController">관리</th>
 </tr>
 <c:forEach var="vo" items="${commentList}" >
 <tr>
-	<td><c:out value="${vo.commentRegisterId}"/></td>
-	<td><c:out value="${vo.commentContent}"/></td>
-	<td><c:out value="${vo.commentRegisterDate}"/></td>
-	<td>삭제</td>
+	<td class="commentRegisterId"><c:out value="${vo.commentRegisterId}"/></td>
+	<td class="commentContent"><c:out value="${vo.commentContent}"/></td>
+	<td class="commentRegisterDate"><c:out value="${vo.commentRegisterDate}"/></td>
+	<td class="commentController">
+		<c:if test="${sessionScope.LoginVO.id eq vo.commentRegisterId }">
+			<button class="replyEditBtn" >수정</button>
+			<button class="replyDeleteBtn" data-commentId="${vo.commentId}" >삭제</button>
+		</c:if>
+	</td>
 </tr>
 </c:forEach>
 </table>

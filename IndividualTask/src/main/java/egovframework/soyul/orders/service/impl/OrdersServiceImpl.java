@@ -1,6 +1,9 @@
 package egovframework.soyul.orders.service.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -62,12 +65,15 @@ public class OrdersServiceImpl extends EgovAbstractServiceImpl implements Orders
 		List<EgovMap> list = ordersMapper.memberOrdersList(ordererId);
 		List<String> memberList = new ArrayList<String>();
 		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		
 		
 		for(int i=0; i<list.size(); i++) {
 //			String product = list.get(i).get("orderProductFirst") + list.get(i).get("orderProductMiddle")
 //							+ list.get(i).get("orderProductLast") + list.get(i).get("orderProducPackage") ;
 			
-			String product = (String)list.get(i).get("orderProductFirst")+" + ";
+			String product = (dateFormat.format((Date)list.get(i).get("orderDate"))+" :   ");
+			product += ((String)list.get(i).get("orderProductFirst")+" + ");
 			product += ((String)list.get(i).get("orderProductMiddle")+" + ");
 			product += ((String)list.get(i).get("orderProductLast")+" + ");
 			product += (String)list.get(i).get("orderProductPackage");
@@ -90,6 +96,11 @@ public class OrdersServiceImpl extends EgovAbstractServiceImpl implements Orders
 	@Override
 	public int memberOrdersUpdate(OrdersVO ordersVO) throws Exception {
 		return ordersMapper.memberOrdersUpdate(ordersVO);
+	}
+
+	@Override
+	public int deleteOrders(OrdersVO ordersVO) throws Exception {
+		return ordersMapper.deleteOrders(ordersVO);
 	}
 
 	

@@ -143,7 +143,7 @@ public class ReviewController {
 		model.addAttribute("result", result);
 		
 		// insert에 있는 이중서브밋 방지를 위해 생성한 sessionBoard를 지워 새로 등록을 가능하도록 해줌
-		request.getSession().removeAttribute("sessionBoard");
+		request.getSession().removeAttribute("sessionReview");
 
 		return "yul/review/reviewRegist";
 	}
@@ -159,7 +159,7 @@ public class ReviewController {
 		
 		// 이중 서브밋 방지 체크 : boardService.insertBoard를 수행 후 sessionBoard에 값이 저장되므로 이를 확인해서
 		// 중복 서브밋인지 감별함
-		if (request.getSession().getAttribute("sessionBoard") != null) {
+		if (request.getSession().getAttribute("sessionReview") != null) {
 			return "forward:/review/list.do";
 		}
 
@@ -194,7 +194,7 @@ public class ReviewController {
 		reviewService.insertReview(reviewVO);
 
 		// 이중 서브밋 방지 : boardService.insertBoard(boardVO)를 수행 후 해당 정보를 session에 저장함
-		request.getSession().setAttribute("sessionBoard", reviewVO);
+		request.getSession().setAttribute("sessionReview", reviewVO);
 
 		return "forward:/review/list.do";
 	}
@@ -209,7 +209,7 @@ public class ReviewController {
 		System.out.println("/review/update.do 컨트롤 호출");
 
 		// 이중 서브밋 방지
-		if (request.getSession().getAttribute("sessionBoard") != null) {
+		if (request.getSession().getAttribute("sessionReview") != null) {
 			return "forward:/review/list.do";
 		}
 
@@ -242,7 +242,7 @@ public class ReviewController {
 		reviewService.updateReview(reviewVO);
 
 		// 이중 서브밋 방지 : boardService.insertBoard(boardVO)를 수행 후 해당 정보를 session에 저장함
-		request.getSession().setAttribute("sessionBoard", reviewVO);
+		request.getSession().setAttribute("sessionReview", reviewVO);
 
 		return "forward:/review/list.do";
 	}

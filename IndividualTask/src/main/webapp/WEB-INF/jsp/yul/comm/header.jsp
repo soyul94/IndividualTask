@@ -19,11 +19,18 @@
 		
 		<div id="header">
 			<div id="logo">
-				<img src="<c:url value='/yul/images/main/task_logo.png' />" alt="소율 로고">
+				<a href="${pageContext.request.contextPath}/main.do">
+					<img src="<c:url value='/yul/images/main/task_logo.png' />" alt="소율 로고">
+				</a>
 			</div>
 			<nav>
 				<div id="loginBar">
 					<ul>
+						<li style="width:40%; color: white; font-weight: bold; font-size: 14px;">
+							<c:if test="${not empty sessionScope.LoginVO.id}">
+								<c:out value="${sessionScope.LoginVO.name}" />님 로그인
+							</c:if> 
+						</li>
 						<li><a href="<c:url value='/main.do' />">Home</a></li>
 						<!-- <li><a href="#">Join</a></li> -->
 						<!-- <li><a href="#">Login</a></li> -->
@@ -35,10 +42,10 @@
 							<c:otherwise>
 								<li><a href="#">MyPage</a></li>
 								<li>
-								<a href="${pageContext.request.contextPath}/login/actionLogout.do">
+									<a href="${pageContext.request.contextPath}/login/actionLogout.do">
 									<%-- <c:out value="${sessionScope.LoginVO.name}" />님 로그아웃 --%>
 									Logout
-								</a>
+									</a>
 								</li>
 							</c:otherwise>
 						</c:choose>

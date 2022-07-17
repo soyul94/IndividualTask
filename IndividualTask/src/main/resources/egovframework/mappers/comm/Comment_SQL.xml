@@ -37,7 +37,7 @@
 	</insert>
 	
 	<delete id="deleteComment" parameterType="egovframework.soyul.comm.CommentVO">
-		delete from COMMENT where BOARD_ID=#{boardId} and COMMENT_ID=#{commentId}
+		delete from COMMENT where BOARD_ID=#{boardId} and COMMENT_ID=#{commentId} and COMMENT_REGISTER_ID=#{commentRegisterId}
 	</delete>
 	
 </mapper>	  

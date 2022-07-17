@@ -240,7 +240,7 @@
 			return false;
 		}
 		else{
-			alert("회원가입을 완료했습닏. 로그인을 해주세요.");
+			alert("회원가입을 완료했습니다. 로그인을 해주세요.");
 			return true;
 		}
 			//!$("[name='sexdstnCode']").val()||

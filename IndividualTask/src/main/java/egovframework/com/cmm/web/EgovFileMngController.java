@@ -78,18 +78,20 @@ public class EgovFileMngController {
     public String selectFileInfsForUpdate(@ModelAttribute("searchVO") FileVO fileVO, @RequestParam Map<String, Object> commandMap,
 	    ModelMap model) throws Exception {
 
-	String atchFileId = (String)commandMap.get("param_atchFileId");
-
-	fileVO.setAtchFileId(atchFileId);
-
-	List<FileVO> result = fileService.selectFileInfs(fileVO);
-
-	model.addAttribute("fileList", result);
-	model.addAttribute("updateFlag", "Y");
-	model.addAttribute("fileListCnt", result.size());
-	model.addAttribute("atchFileId", atchFileId);
-
-	return "cmm/fms/EgovFileList";
+    	System.out.println("/cmm/fms/selectFileInfsForUpdate.do 컨트롤 호출");		
+    	
+		String atchFileId = (String)commandMap.get("param_atchFileId");
+	
+		fileVO.setAtchFileId(atchFileId);
+	
+		List<FileVO> result = fileService.selectFileInfs(fileVO);
+	
+		model.addAttribute("fileList", result);
+		model.addAttribute("updateFlag", "Y");
+		model.addAttribute("fileListCnt", result.size());
+		model.addAttribute("atchFileId", atchFileId);
+	
+		return "cmm/fms/EgovFileList";
     }
 
     /**
@@ -106,29 +108,34 @@ public class EgovFileMngController {
     public String deleteFileInf(@ModelAttribute("searchVO") FileVO fileVO, @RequestParam("returnUrl") String returnUrl,
 	    HttpServletRequest request,
 	    ModelMap model) throws Exception {
+    	
+    	System.out.println("/cmm/fms/deleteFileInfs.do 컨트롤 호출");
 
-	Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+    	Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
 
-	if (isAuthenticated) {
-	    fileService.deleteFileInf(fileVO);
-	}
+		if (isAuthenticated) {
+		    fileService.deleteFileInf(fileVO);
+		}
 
-	//--------------------------------------------
-	// contextRoot가 있는 경우 제외 시켜야 함
-	//--------------------------------------------
-	////return "forward:/cmm/fms/selectFileInfs.do";
-	//return "forward:" + returnUrl;
-
-	if ("".equals(request.getContextPath()) || "/".equals(request.getContextPath())) {
-	    return "forward:" + returnUrl;
-	}
-
-	if (returnUrl.startsWith(request.getContextPath())) {
-	    return "forward:" + returnUrl.substring(returnUrl.indexOf("/", 1));
-	} else {
-	    return "forward:" + returnUrl;
-	}
-	////------------------------------------------
+		//--------------------------------------------
+		// contextRoot가 있는 경우 제외 시켜야 함
+		//--------------------------------------------
+		////return "forward:/cmm/fms/selectFileInfs.do";
+		//return "forward:" + returnUrl;
+	
+		System.out.println("request.getContextPath() : "+request.getContextPath());
+		System.out.println("returnUrl : "+returnUrl);
+		
+		if ("".equals(request.getContextPath()) || "/".equals(request.getContextPath())) {
+		    return "forward:" + returnUrl;
+		}
+	
+		if (returnUrl.startsWith(request.getContextPath())) {
+		    return "forward:" + returnUrl.substring(returnUrl.indexOf("/", 1));
+		} else {
+		    return "forward:" + returnUrl;
+		}
+		////------------------------------------------
     }
 
     /**

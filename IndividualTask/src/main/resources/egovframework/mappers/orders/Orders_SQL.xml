@@ -80,6 +80,7 @@
 			ORDER_STATE 
 		from ORDERS 
 		where ORDERER_ID = #{ordererId}
+		order by ORDER_DATE desc
 	</select>
 	
 	<!-- <select id="AllOrdersListCnt" resultType="int">
@@ -139,7 +140,7 @@
 	</update>
 	
 	<delete id="deleteOrders" parameterType="egovframework.soyul.orders.OrdersVO">
-		delete from ORDERS where BOARD_ID=#{orderId} and COMMENT_ID=#{commentId}
+		delete from ORDERS where ORDER_ID=#{orderId} and ORDERER_ID=#{ordererId}
 	</delete>
 	
 </mapper>	  

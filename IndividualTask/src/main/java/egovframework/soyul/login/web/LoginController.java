@@ -38,26 +38,26 @@ public class LoginController {
 	@RequestMapping(value="/loginForm.do")
 	public String actionLogin(HttpServletRequest request, ModelMap model) throws Exception{
 		
+		System.out.println("/loginForm.do 실행");
+		
 		String sessionAddress = (String)request.getSession().getAttribute("address");
 		String address = request.getHeader("Referer");
+		System.out.println("address : "+address);
 		
-		if(address.equals("http://localhost:5159/soyul/member/joinForm.do")) {
-			address="/main.do";
-		}
-		if(!address.equals("http://localhost:5159/soyul/login/loginForm.do") 
-			&& !address.equals("http://localhost:5159/soyul/login/actionLogout.do")
-			&& !address.equals("http://localhost:5159/soyul/login/actionLogin.do")) {
+
+		if(address.equals("http://localhost:5159/soyul/member/joinForm.do")
+			|| address.equals("http://localhost:5159/soyul/login/loginForm.do") 
+			|| address.equals("http://localhost:5159/soyul/login/actionLogout.do")
+			|| address.equals("http://localhost:5159/soyul/login/actionLogin.do")) {
 			
 			if(sessionAddress==null || sessionAddress.equals(""))
 				address="/main.do";
-				
-			request.getSession().setAttribute("address", address);
+			else	
+				address=sessionAddress;
 		}
 		
-		
-
-		
-		model.addAttribute("address",address);
+		System.out.println("address : "+address);
+		request.getSession().setAttribute("address", address);
 		
 		return "/yul/comm/loginForm";
 	}
@@ -65,6 +65,8 @@ public class LoginController {
 	
 	@RequestMapping(value="/actionLogin.do")
 	public String actionLogin(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, ModelMap model) throws Exception{
+		
+		System.out.println("/actionLogin.do 실행");
 		
 		LoginVO resultVO = loginService.actionLogin(loginVO); //로그인한 사람이 상세정보 조회
 		
@@ -77,7 +79,6 @@ public class LoginController {
 		}
 		else {
 			model.addAttribute("loginMessage",egovMessageSource.getMessage("fail.common.login"));
-//			return "/yul/comm/loginForm";
 			return "forward:/login/loginForm.do";
 		}
 		

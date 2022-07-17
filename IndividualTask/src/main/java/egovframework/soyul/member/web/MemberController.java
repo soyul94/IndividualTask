@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
@@ -72,7 +73,7 @@ public class MemberController {
 	
 	
 	@RequestMapping(value="/joinForm.do")
-	public String joinForm(ModelMap model) throws Exception {
+	public String joinForm(HttpServletRequest request, ModelMap model) throws Exception {
 		System.out.println("/member/joinForm.do 실행");
 
 		//패스워드힌트목록을 코드정보로부터 조회
@@ -102,6 +103,9 @@ public class MemberController {
 		
 		model.addAttribute("passwordHint_result", passwordHint_result); //패스워트힌트목록
 		model.addAttribute("sexdstnCode_result", sexdstnCode_result); //성별구분코드목록
+		
+		// insert에 있는 이중서브밋 방지를 위해 생성한 sessionMemberInfo를 지워 새로 등록을 가능하도록 해줌
+		request.getSession().removeAttribute("sessionMemberInfo");
 
 		
 		return "/yul/join/joinForm";
@@ -109,7 +113,13 @@ public class MemberController {
 	
 	
 	@RequestMapping(value="/addMember.do")
-	public String addMember(MemberVO memberVO, LoginVO login, ModelMap model) throws Exception{
+	public String addMember(MemberVO memberVO, LoginVO login, HttpServletRequest request, ModelMap model) throws Exception{
+		
+		// 중복 서브밋인지 감별함
+		if (request.getSession().getAttribute("sessionMemberInfo") != null) {
+			return "forward:/main.do";
+		}
+		
 		// 가입상태 초기화
 		memberVO.setEmplyrSttusCode("가입완료");
 		
@@ -117,6 +127,10 @@ public class MemberController {
 		
 		// 일반회원가입신청 등록시 일반회원등록기능을 사용하여 등록한다.
 		memberManageService.insertMber(memberVO);
+		
+		// 이중 서브밋 방지 : memberManageService.insertMber(memberVO)를 수행 후 해당 정보를 session에 저장함
+		request.getSession().setAttribute("sessionMemberInfo", memberVO);
+		
 		return "forward:/main.do";
 	}
 	

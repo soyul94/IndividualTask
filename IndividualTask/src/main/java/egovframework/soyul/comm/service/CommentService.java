@@ -16,7 +16,7 @@ public interface CommentService {
 	
 	public int insertComment(CommentVO vo) throws Exception;
 
-	public void deleteComment(CommentVO vo) throws Exception;
+	public int deleteComment(CommentVO vo) throws Exception;
 	
 }
 

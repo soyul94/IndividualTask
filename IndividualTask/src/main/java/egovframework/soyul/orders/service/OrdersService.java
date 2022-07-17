@@ -22,4 +22,6 @@ public interface OrdersService {
 	public int allOrdersCnt(String ordererId) throws Exception;
 
 	public int memberOrdersUpdate(OrdersVO ordersVO) throws Exception;
+
+	public int deleteOrders(OrdersVO ordersVO) throws Exception;
 }

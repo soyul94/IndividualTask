@@ -191,7 +191,7 @@ $(function(){
 						<td>
 							<c:out value="${USER_INFO.id}"/>
 						</td>
-					</tr>
+					</tr> 
 					<tr>
 						<th scope="row">내용</th>
 						<td><%-- textarea태그는 한줄로 쓰는 것과 줄 변환해서 쓰는 것은 차이가 크다. textarea태그 안의 enter키,tap태까지 모두 입력되기 때문이다. --%>

@@ -181,6 +181,7 @@
 				  dataType: "text"											//요청의 결과(서버의 응답)으로 받을 데이터의 형식
 				}).done(function( msg ) {
 				 	alert(msg);
+				 	$('[name="commentContent"]').val('');
 				 	readComment();
 				 	
 				}).fail(function( jqXHR, textStatus ) {

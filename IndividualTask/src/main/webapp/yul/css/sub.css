@@ -439,8 +439,8 @@
 }
 .comment-list #replyList .commentController .replyEditBtn, .comment-list #replyList .commentController .replyDeleteBtn{
 	width: 40%;
-    height: 30px;
-	margin: 1%;
+    height: 24px;
+	margin: 0 1%;
 	box-sizing: border-box;
 	font-sise:14px;
     display: inline-block;
